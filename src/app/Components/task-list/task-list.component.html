@@ -31,6 +31,7 @@
 
     <!-- Task Actions -->
     <div class="task-actions">
+      <button mat-button (click)="viewSubTasks.emit(task)">View Subtasks</button>
       <button mat-button (click)="editTask.emit(task)">Edit</button>
       <button mat-button color="warn" (click)="deleteTask.emit(task.id)">Delete</button>
     </div>

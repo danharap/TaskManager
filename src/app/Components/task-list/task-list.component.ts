@@ -11,6 +11,7 @@ export class TaskListComponent {
   @Input() searchQuery: string = '';
   @Output() editTask = new EventEmitter<TaskModel>();
   @Output() deleteTask = new EventEmitter<number>();
+  @Output() viewSubTasks = new EventEmitter<TaskModel>();
 
   get filteredTasks() {
     return this.tasks.filter(task =>

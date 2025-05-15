@@ -44,9 +44,10 @@
 
   <!-- Task List -->
   <app-task-list
-    [tasks]="filteredTasks"
-    [searchQuery]="searchQuery"
-    (editTask)="onEditTask($event)"
-    (deleteTask)="onDeleteTask($event)"
-  ></app-task-list>
+  [tasks]="filteredTasks"
+  [searchQuery]="searchQuery"
+  (editTask)="onEditTask($event)"
+  (deleteTask)="onDeleteTask($event)"
+  (viewSubTasks)="onViewSubTasks($event)"
+></app-task-list>
 </div>

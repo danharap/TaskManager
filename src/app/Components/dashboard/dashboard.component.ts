@@ -41,6 +41,10 @@ export class DashboardComponent implements OnInit {
     this.router.navigate(['/login']);
   }
 
+  onViewSubTasks(task: TaskModel) {
+  this.router.navigate(['/tasks', task.id, 'subtasks']);
+}
+
   getTasks() {
     this.taskService.getTasks().subscribe({
       next: (response) => {

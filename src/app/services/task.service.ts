@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { DataService } from '../data.service';
 import { TaskModel } from '../models/task.model';
+import { SubTaskModel } from '../models/task.model';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
@@ -36,4 +37,20 @@ export class TaskService {
   deleteTask(id: number): Observable<any> {
     return this.dataService.deleteTask(id);
   }
+
+  getSubTasks(taskId: number): Observable<SubTaskModel[]> {
+  return this.http.get<SubTaskModel[]>(`${this.apiUrl}/${taskId}/subtasks`);
+}
+
+addSubTask(taskId: number, subTask: SubTaskModel): Observable<SubTaskModel> {
+  return this.http.post<SubTaskModel>(`${this.apiUrl}/${taskId}/subtasks`, subTask);
+}
+
+updateSubTask(subTaskId: number, subTask: SubTaskModel): Observable<SubTaskModel> {
+  return this.http.put<SubTaskModel>(`${this.apiUrl}/subtasks/${subTaskId}`, subTask);
+}
+
+deleteSubTask(subTaskId: number): Observable<any> {
+  return this.http.delete(`${this.apiUrl}/subtasks/${subTaskId}`);
+}
 }

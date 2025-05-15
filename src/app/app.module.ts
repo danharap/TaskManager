@@ -26,6 +26,7 @@ import { TaskDialogComponent } from './Components/task-dialog/task-dialog.compon
 import { UpdateUsernameDialogComponent } from './Components/update-username-dialog/update-username-dialog.component';
 import { UpdateRoleDialogComponent } from './Components/update-role-dialog/update-role-dialog.component';
 import { AnalyticsDashboardComponent } from './Components/analytics-dashboard/analytics-dashboard.component';
+import { SubtaskBoardComponent } from './Components/subtask-board/subtask-board.component';
 
 
 @NgModule({
@@ -46,6 +47,7 @@ import { AnalyticsDashboardComponent } from './Components/analytics-dashboard/an
     UpdateUsernameDialogComponent,
     UpdateRoleDialogComponent,
     AnalyticsDashboardComponent,
+    SubtaskBoardComponent,
   ],
   imports: [
     BrowserModule,

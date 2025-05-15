@@ -1,0 +1,71 @@
+<div class="subtask-board-container">
+  <h2>Subtasks Board</h2>
+  <div class="kanban-board">
+    <div class="kanban-column" *ngFor="let status of statuses">
+      <div class="kanban-column-header">{{ status }}</div>
+      <div class="kanban-tasks">
+        <div
+          class="kanban-task"
+          *ngFor="let subtask of getSubtasksByStatus(status)"
+          [attr.aria-label]="subtask.title"
+        >
+          <button
+            class="arrow-btn"
+            aria-label="Move left"
+            (click)="moveSubTask(subtask, -1); $event.stopPropagation()"
+            [disabled]="statuses.indexOf(subtask.status) === 0"
+            title="Move to previous column"
+          >
+            <span class="material-icons">arrow_back</span>
+          </button>
+          <span
+            class="task-title clickable"
+            [title]="subtask.title"
+            (click)="openSubtaskDialog(subtask)"
+          >
+            {{ subtask.title }}
+          </span>
+          <button
+            class="arrow-btn"
+            aria-label="Move right"
+            (click)="moveSubTask(subtask, 1); $event.stopPropagation()"
+            [disabled]="statuses.indexOf(subtask.status) === statuses.length - 1"
+            title="Move to next column"
+          >
+            <span class="material-icons">arrow_forward</span>
+          </button>
+          <button
+            class="delete-btn"
+            aria-label="Delete subtask"
+            (click)="deleteSubTask(subtask); $event.stopPropagation()"
+            title="Delete subtask"
+          >
+            <span class="material-icons">delete</span>
+          </button>
+        </div>
+      </div>
+      <div *ngIf="status === 'To Do'" class="add-subtask-form">
+        <input [(ngModel)]="newSubTaskTitle" placeholder="New subtask title" aria-label="New subtask title" />
+        <button (click)="addSubTask()" [disabled]="!newSubTaskTitle.trim()">Add</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Subtask View/Edit Dialog -->
+  <div *ngIf="viewingSubtask" class="subtask-view-dialog">
+    <div class="subtask-view-content">
+      <h3>Edit Subtask</h3>
+      <input [(ngModel)]="viewingSubtask.title" placeholder="Title" />
+      <textarea [(ngModel)]="viewingSubtask.description" placeholder="Description"></textarea>
+      <label>
+        <input type="checkbox" [(ngModel)]="viewingSubtask.isCompleted" />
+        Completed
+      </label>
+      <div class="edit-actions">
+        <button (click)="saveViewingSubtask()">Save</button>
+        <button (click)="closeViewSubtask()">Cancel</button>
+        <button class="delete-btn" (click)="deleteSubTask(viewingSubtask)">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>

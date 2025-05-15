@@ -1,0 +1,375 @@
+.subtask-board-container {
+  padding: 40px 20px;
+  max-width: 1200px;
+  margin: 40px auto 0;
+  font-family: 'Roboto', Arial, sans-serif;
+  background-color: var(--secondary-color);
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+}
+
+html.dark-mode .subtask-board-container {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: var(--primary-color);
+}
+
+.kanban-board {
+  display: flex;
+  gap: 24px;
+  min-height: 400px;
+}
+
+.kanban-column {
+  flex: 1;
+  background: var(--secondary-color);
+  border-radius: 10px;
+  padding: 18px 12px 12px 12px;
+  min-width: 240px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  display: flex;
+  flex-direction: column;
+  transition: background 0.3s;
+}
+
+html.dark-mode .kanban-column {
+  background: var(--background-color);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+}
+
+.kanban-column-header {
+  font-weight: bold;
+  font-size: 1.15rem;
+  margin-bottom: 16px;
+  color: var(--primary-color);
+  text-align: center;
+  letter-spacing: 1px;
+}
+
+.kanban-tasks {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.kanban-task {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  background: var(--background-color);
+  border-radius: 7px;
+  padding: 12px 10px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+  border-left: 4px solid var(--primary-color);
+  cursor: pointer;
+  transition: box-shadow 0.2s, background 0.2s;
+  position: relative;
+}
+
+.task-title.clickable {
+  flex: 1;
+  font-size: 1rem;
+  color: var(--text-color);
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+  padding: 0 6px;
+}
+
+.arrow-btn, .delete-btn {
+  background: none;
+  border: none;
+  padding: 2px 4px;
+  border-radius: 50%;
+  cursor: pointer;
+  color: var(--primary-color);
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  transition: background 0.2s;
+}
+
+.arrow-btn:disabled {
+  color: #bbb;
+  cursor: not-allowed;
+}
+
+.delete-btn {
+  color: #dc3545;
+  position: absolute;
+  right: 4px;
+  bottom: 4px;
+  font-size: 1.1rem;
+}
+
+.arrow-btn:hover:not(:disabled),
+.delete-btn:hover {
+  background: var(--hover-color);
+  color: #fff;
+}
+
+.kanban-task:hover .task-title {
+  color: var(--primary-color);
+}
+
+.subtask-view-dialog {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.subtask-view-content {
+  background: var(--secondary-color);
+  color: var(--text-color);
+  padding: 32px 24px;
+  border-radius: 10px;
+  min-width: 300px;
+  max-width: 90vw;
+  box-shadow: 0 6px 24px rgba(0,0,0,0.25);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.subtask-view-content input,
+.subtask-view-content textarea {
+  width: 100%;
+  padding: 7px;
+  border-radius: 4px;
+  border: 1px solid var(--border-color);
+  background: var(--background-color);
+  color: var(--text-color);
+}
+
+
+.edit-actions .delete-btn {
+  position: static;
+  color: #dc3545;
+}
+
+html.dark-mode .kanban-task {
+  background: var(--secondary-color);
+}
+
+
+.task-actions {
+  display: flex;
+  gap: 6px;
+  margin-left: 10px;
+}
+
+.task-actions button {
+  background: var(--primary-color);
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 4px 10px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, transform 0.2s;
+}
+
+.task-actions button:disabled {
+  background: #bbb;
+  color: #eee;
+  cursor: not-allowed;
+}
+
+.task-actions button:hover:not(:disabled) {
+  background: var(--hover-color);
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+.add-subtask-form {
+  margin-top: 18px;
+  display: flex;
+  gap: 8px;
+}
+
+.add-subtask-form input {
+  flex: 1;
+  padding: 7px 10px;
+  border-radius: 4px;
+  border: 1px solid var(--border-color);
+  background: var(--background-color);
+  color: var(--text-color);
+  font-size: 1rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.add-subtask-form input:focus {
+  border-color: var(--primary-color);
+  outline: none;
+  box-shadow: 0 0 5px var(--primary-color);
+}
+
+html.dark-mode .add-subtask-form input {
+  background: var(--secondary-color);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+}
+
+.add-subtask-form button {
+  background: var(--primary-color);
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 7px 16px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.add-subtask-form button:hover {
+  background: var(--hover-color);
+  transform: translateY(-2px);
+}
+
+.task-actions button {
+  background: var(--primary-color);
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 4px 10px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, transform 0.2s;
+}
+
+.task-actions button:disabled {
+  background: #bbb;
+  color: #eee;
+  cursor: not-allowed;
+}
+
+
+@media (max-width: 900px) {
+  .kanban-board {
+    flex-direction: column;
+    gap: 18px;
+  }
+  .kanban-column {
+    min-width: unset;
+  }
+}
+
+.edit-subtask-form {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  background: var(--background-color);
+  padding: 10px;
+  border-radius: 6px;
+}
+
+.edit-subtask-form input,
+.edit-subtask-form textarea {
+  padding: 5px;
+  border-radius: 3px;
+  border: 1px solid var(--border-color);
+  background: var(--secondary-color);
+  color: var(--text-color);
+}
+
+.edit-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.task-title .completed {
+  text-decoration: line-through;
+  color: #888;
+}
+
+.task-main-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.task-title {
+  flex: 1;
+  font-size: 1rem;
+  color: var(--text-color);
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-right: 8px;
+}
+
+.task-actions button {
+  background: none;
+  border: none;
+  padding: 2px 4px;
+  border-radius: 50%;
+  cursor: pointer;
+  color: var(--primary-color);
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  transition: background 0.2s;
+}
+
+.task-actions button:hover {
+  background: var(--hover-color);
+  color: #fff;
+}
+
+.delete-btn {
+  position: relative;
+  bottom: -8px;
+  right: -8px;
+  color: #dc3545;
+}
+
+.material-icons {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: normal;
+  font-size: 1.2rem;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  direction: ltr;
+  -webkit-font-smoothing: antialiased;
+}
+
+.subtask-view-content h3 {
+  margin-top: 0;
+}
+
+.subtask-view-content button {
+  margin-top: 20px;
+  background: var(--primary-color);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 18px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+html.dark-mode .subtask-view-content {
+  background: var(--background-color);
+  color: var(--text-color);
+}

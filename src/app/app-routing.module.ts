@@ -7,7 +7,7 @@ import { AdminComponent } from './Components/admin/admin.component';
 import { SettingsComponent} from './Components/settings/settings.component';
 import { CalendarComponent } from './Components/calendar/calendar.component';
 import { AnalyticsDashboardComponent } from './Components/analytics-dashboard/analytics-dashboard.component';
-
+import { SubtaskBoardComponent } from './Components/subtask-board/subtask-board.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -20,6 +20,7 @@ const routes: Routes = [
   { path: 'admin/tasks', component: AdminComponent }, 
   { path: 'admin/users', component: AdminComponent },
   { path: 'analytics', component: AnalyticsDashboardComponent }, 
+  { path: 'tasks/:id/subtasks', component: SubtaskBoardComponent },
 ];
 
 @NgModule({

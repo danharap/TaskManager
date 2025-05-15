@@ -1,0 +1,62 @@
+<main class="settings-container">
+  <h2>Account Settings</h2>
+
+  <!-- Dark Mode Toggle -->
+  <section class="change-section">
+    <h3>Appearance</h3>
+    <i class="icon" [ngClass]="isDarkMode() ? 'moon-icon' : 'sun-icon'"></i>
+    <label class="theme-toggle">
+      <input type="checkbox" [checked]="isDarkMode()" (change)="toggleTheme()" />
+      Enable Dark Mode
+    </label>
+  </section>
+
+  <!-- Current Info Section -->
+  <section class="current-info">
+    <h3>Current Information</h3>
+    <p><strong>Username:</strong> {{ currentUsername }}</p>
+    <p><strong>Password:</strong> {{ currentPassword }}</p>
+  </section>
+
+  <!-- Change Username Section -->
+  <section class="change-section">
+    <h3>Change Username</h3>
+    <form (ngSubmit)="changeUsername()" class="form-container">
+      <div class="form-group">
+        <label for="currentUsername">Current Username:</label>
+        <input id="currentUsername" [(ngModel)]="enteredCurrentUsername" name="currentUsername" required />
+      </div>
+      <div class="form-group">
+        <label for="newUsername">New Username:</label>
+        <input id="newUsername" [(ngModel)]="newUsername" name="newUsername" required />
+      </div>
+      <div class="form-group">
+        <label for="confirmNewUsername">Confirm New Username:</label>
+        <input id="confirmNewUsername" [(ngModel)]="confirmNewUsername" name="confirmNewUsername" required />
+      </div>
+      <button type="submit">Update Username</button>
+      <p *ngIf="usernameMessage" class="message">{{ usernameMessage }}</p>
+    </form>
+  </section>
+
+  <!-- Change Password Section -->
+  <section class="change-section">
+    <h3>Change Password</h3>
+    <form (ngSubmit)="changePassword()" class="form-container">
+      <div class="form-group">
+        <label for="currentPassword">Current Password:</label>
+        <input id="currentPassword" [(ngModel)]="enteredCurrentPassword" name="currentPassword" type="password" required />
+      </div>
+      <div class="form-group">
+        <label for="newPassword">New Password:</label>
+        <input id="newPassword" [(ngModel)]="newPassword" name="newPassword" type="password" required />
+      </div>
+      <div class="form-group">
+        <label for="confirmNewPassword">Confirm New Password:</label>
+        <input id="confirmNewPassword" [(ngModel)]="confirmNewPassword" name="confirmNewPassword" type="password" required />
+      </div>
+      <button type="submit">Update Password</button>
+      <p *ngIf="passwordMessage" class="message">{{ passwordMessage }}</p>
+    </form>
+  </section>
+</main>

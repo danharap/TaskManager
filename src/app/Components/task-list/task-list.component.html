@@ -1,0 +1,38 @@
+<div class="task-list">
+  <div
+    *ngFor="let task of tasks"
+    class="task-card"
+    [ngClass]="{
+      'priority-high': task.priority === 'High',
+      'priority-medium': task.priority === 'Medium',
+      'priority-low': task.priority === 'Low'
+    }"
+  >
+    <!-- Task Header (Title Banner) -->
+    <div class="task-header">
+      <span class="task-title">{{ task.title }}</span>
+      <span class="priority-circle"></span>
+    </div>
+
+    <!-- Task Body -->
+    <div class="task-body">
+      <div class="task-description-box">
+        <p class="task-description">{{ task.description }}</p>
+      </div>
+      <p class="task-priority">Priority: {{ task.priority }}</p>
+      <p class="task-date">Planned Completion: {{ task.plannedCompletionDate | date: 'MMMM d, yyyy' }}</p>
+      <p class="task-status">
+        Status:
+        <span [ngClass]="{ 'status-completed': task.isCompleted, 'status-pending': !task.isCompleted }">
+          {{ task.isCompleted ? 'Completed' : 'Pending' }}
+        </span>
+      </p>
+    </div>
+
+    <!-- Task Actions -->
+    <div class="task-actions">
+      <button mat-button (click)="editTask.emit(task)">Edit</button>
+      <button mat-button color="warn" (click)="deleteTask.emit(task.id)">Delete</button>
+    </div>
+  </div>
+</div>

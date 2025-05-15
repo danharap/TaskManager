@@ -1,0 +1,13 @@
+<div class="update-username-dialog">
+  <h2>Update Username</h2>
+  <form (ngSubmit)="updateUsername()">
+    <label>
+      New Username:
+      <input [(ngModel)]="newUsername" name="newUsername" required />
+    </label>
+    <div class="dialog-actions">
+      <button type="submit" mat-button>Save</button>
+      <button type="button" mat-button (click)="cancel()">Cancel</button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,52 @@
+<div class="dashboard-container">
+  <!-- Dashboard Header -->
+  <div class="dashboard-header">
+    <div class="dashboard-title">
+      <h1>Task Dashboard</h1>
+      <p id="welcomeMessage">Welcome, <strong>{{ name }}</strong></p>
+    </div>
+    <div class="dashboard-role">
+      <p id="roleDisplay">Role: <strong>{{ userRole }}</strong></p>
+      
+    </div>
+  </div>
+
+  <!-- Dashboard Controls -->
+  <div class="dashboard-controls">
+    <button (click)="openCreateTaskDialog()" class="create-task-button">
+      Create Task
+    </button>
+    <input
+      #searchBox
+      type="text"
+      placeholder="Search tasks..."
+      (input)="onSearch(searchBox.value)"
+      class="search-input"
+    />
+    <label>
+      Sort by:
+      <select [(ngModel)]="sortOrder" (change)="onSortOrderChange(sortOrder)" class="sort-select">
+        <option value="newest">Newest</option>
+        <option value="oldest">Oldest</option>
+        <option value="plannedCompletion">Planned Completion</option>
+      </select>
+    </label>
+    <label>
+      Priority:
+      <select [(ngModel)]="priorityFilter" (change)="onPriorityFilterChange(priorityFilter)" class="priority-select">
+        <option value="All">All</option>
+        <option value="Low">Low</option>
+        <option value="Medium">Medium</option>
+        <option value="High">High</option>
+      </select>
+    </label>
+  </div>
+
+  <!-- Task List -->
+  <app-task-list
+    [tasks]="filteredTasks"
+    [searchQuery]="searchQuery"
+    (editTask)="onEditTask($event)"
+    (deleteTask)="onDeleteTask($event)"
+  ></app-task-list>
+</div>

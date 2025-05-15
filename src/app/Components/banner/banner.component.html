@@ -1,0 +1,17 @@
+<div class="banner">
+  <div class="banner-left">
+    <!-- Show the title only if the user is not logged in -->
+    <h1 *ngIf="!isLoggedIn()">Angular Task Manager 2025</h1>
+  </div>
+  <div class="banner-right">
+    <span *ngIf="!isLoggedIn()" class="status">
+      <mat-icon class="status-icon"  >cancel</mat-icon>
+      Sign In
+    </span>
+    <span *ngIf="isLoggedIn()" class="status">
+      <mat-icon class="status-icon" >check_circle</mat-icon>
+      {{ userName }}
+    </span>
+    <button *ngIf="isLoggedIn()" class="sign-out" style="margin-right: 35px;" (click)="logout()">Sign Out</button>
+  </div>
+</div>

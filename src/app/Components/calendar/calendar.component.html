@@ -1,0 +1,58 @@
+<div class="calendar-container" #calendarContainer>
+  <h2>Task Calendar</h2>
+
+  <!-- Calendar Navigation -->
+  <div class="calendar-navigation">
+    <button mat-button class="nav-button" (click)="previousMonth()">Previous</button>
+    <span class="current-month">{{ viewDate | date: 'MMMM yyyy' }}</span>
+    <button mat-button class="nav-button" (click)="nextMonth()">Next</button>
+  </div>
+
+  <!-- Calendar Month View -->
+  <mwl-calendar-month-view
+    [viewDate]="viewDate"
+    [events]="events"
+    (eventClicked)="handleEvent('Clicked', $event.event)"
+    (dayClicked)="handleDayClick($event.day)"
+    [cellTemplate]="customCellTemplate"
+    [headerTemplate]="customHeaderTemplate"
+  >
+  </mwl-calendar-month-view>
+
+  <!-- Custom Header Template -->
+  <ng-template #customHeaderTemplate>
+    <div class="mwl-calendar-month-view-header">
+      <div *ngFor="let day of ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']" class="header-day">
+        {{ day }}
+      </div>
+    </div>
+  </ng-template>
+
+  <!-- Custom Cell Template -->
+  <ng-template #customCellTemplate let-day="day">
+    <div class="custom-day-cell">
+      <!-- Day Header -->
+      <div class="day-header">
+        <span class="day-number">{{ day.date | date: 'd' }}</span>
+        <span *ngIf="day.events.length > 0" class="task-count">
+          {{ day.events.length }} task{{ day.events.length > 1 ? 's' : '' }}
+        </span>
+      </div>
+
+      <!-- Task Titles -->
+      <div class="task-titles">
+        <div
+          *ngFor="let event of day.events"
+          class="task-title"
+          [title]="event.meta.title"
+        >
+          <span
+            class="priority-circle"
+            [ngStyle]="{ 'background-color': event.color?.primary }"
+          ></span>
+          <span class="task-title-text">{{ event.title }}</span>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</div>

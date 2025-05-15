@@ -1,0 +1,16 @@
+<div class="update-role-dialog">
+  <h2>Update Role</h2>
+  <form (ngSubmit)="updateRole()">
+    <label>
+      New Role:
+      <select [(ngModel)]="newRole" name="newRole" required>
+        <option value="User">User</option>
+        <option value="Admin">Admin</option>
+      </select>
+    </label>
+    <div class="dialog-actions">
+      <button type="submit" mat-button>Save</button>
+      <button type="button" mat-button (click)="cancel()">Cancel</button>
+    </div>
+  </form>
+</div>

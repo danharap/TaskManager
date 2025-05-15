@@ -1,0 +1,160 @@
+.calendar-container {
+  padding: 40px;
+  max-width: 1200px;
+  margin: 50px auto 0; /* Add margin-top to create space below the banner */
+  font-family: 'Roboto', Arial, sans-serif;
+  background-color: var(--secondary-color); /* Use variable for background */
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: var(--text-color); /* Use variable for text color */
+}
+
+.calendar-navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.calendar-navigation button {
+  background-color: var(--primary-color); /* Blue background */
+  color: white; /* Change text color to white */
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.calendar-navigation button:hover {
+  background-color: var(--hover-color); /* Use variable for hover effect */
+  transform: translateY(-2px);
+}
+
+.calendar-navigation span {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: var(--text-color); /* Use variable for text color */
+}
+
+.mwl-calendar-month-view {
+  border: 1px solid var(--border-color); /* Use variable for border */
+  border-radius: 5px;
+  background-color: var(--background-color); /* Use variable for background */
+}
+
+.custom-day-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 5px;
+  height: 100%;
+  width: 100%; /* Ensure it takes the full width of the calendar cell */
+  overflow: hidden; /* Prevent overflowing content */
+  background-color: var(--background-color); /* Use variable for background */
+  color: var(--text-color); /* Use variable for text color */
+  box-sizing: border-box; /* Include padding and border in the width */
+}
+
+.day-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.day-number {
+  font-weight: bold;
+  font-size: 1.2rem;
+  color: var(--text-color); /* Use variable for text color */
+}
+
+.task-count {
+  font-size: 0.8rem;
+  background-color: var(--primary-color); /* Use variable for background */
+  color: white; /* Change text color to white for better readability */
+  padding: 2px 5px;
+  border-radius: 10px;
+}
+.task-titles {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: 5px;
+  width: 100%; /* Ensure it takes the full width of the parent container */
+  max-width: 100%; /* Prevent it from exceeding the parent container width */
+  overflow: hidden; /* Prevent overflowing content */
+}
+
+/* Task Title */
+.task-title {
+  display: flex;
+  align-items: center;
+  font-size: 0.9rem;
+  color: var(--text-color); /* Use variable for text color */
+  background-color: var(--secondary-color); /* Use variable for background */
+  padding: 2px 5px;
+  border-radius: 3px;
+  white-space: nowrap; /* Prevent text from wrapping */
+  overflow: hidden; /* Hide overflowing text */
+  text-overflow: ellipsis; /* Add ellipsis for overflowing text */
+  width: 100%; /* Ensure it takes the full width of the parent container */
+  box-sizing: border-box; /* Include padding and border in the width */
+  cursor: pointer; /* Indicate interactivity */
+}
+
+.priority-circle {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+
+.task-title:hover {
+  background-color: var(--hover-color); /* Use variable for hover effect */
+}
+
+/* Calendar Header (Days of the Week) */
+.mwl-calendar-month-view-header {
+  display: flex;
+  justify-content: space-between;
+  background-color: var(--secondary-color); /* Light mode background */
+  color: var(--cal-color); /* Use variable for text color */
+  font-weight: bold;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border-color); /* Subtle border for separation */
+}
+
+.mwl-calendar-month-view-header .header-day {
+  flex: 1;
+  text-align: center;
+  font-size: 1rem;
+  color: var(--cal-color); /* Use variable for text color */
+}
+
+/* Highlight the current day */
+.current-day {
+  background-color: var(--hover-color); /* Use a distinct background color */
+  color: white; /* Ensure text is readable */
+  border: 2px solid var(--primary-color); /* Add a border for emphasis */
+  border-radius: 5px; /* Smooth edges */
+  transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition */
+}
+
+.current-day .day-number {
+  font-weight: bold;
+  color: white; /* Ensure the day number is readable */
+}
+
+/* Calendar Header (Days of the Week) - Dark Mode */
+html.dark-mode .mwl-calendar-month-view-header {
+  background-color: var(--background-color); /* Dark mode background */
+}
+
+html.dark-mode .mwl-calendar-month-view-header .header-day {
+  color: var(--cal-color); /* Use variable for text color */
+}

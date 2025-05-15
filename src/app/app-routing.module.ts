@@ -1,7 +1,26 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { LoginComponent } from './Components/login/login.component';
+import { RegisterComponent } from './Components/register/register.component';
+import { DashboardComponent } from './Components/dashboard/dashboard.component';
+import { AdminComponent } from './Components/admin/admin.component';
+import { SettingsComponent} from './Components/settings/settings.component';
+import { CalendarComponent } from './Components/calendar/calendar.component';
+import { AnalyticsDashboardComponent } from './Components/analytics-dashboard/analytics-dashboard.component';
 
-const routes: Routes = [];
+
+const routes: Routes = [
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
+  { path: 'dashboard', component: DashboardComponent },
+  { path: 'admin', component: AdminComponent },
+  { path: 'settings', component: SettingsComponent },
+  { path: 'calendar', component: CalendarComponent },
+  { path: 'admin/tasks', component: AdminComponent }, 
+  { path: 'admin/users', component: AdminComponent },
+  { path: 'analytics', component: AnalyticsDashboardComponent }, 
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

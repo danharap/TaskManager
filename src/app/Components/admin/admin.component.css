@@ -1,0 +1,99 @@
+.admin-container {
+  padding: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+  font-family: 'Roboto', Arial, sans-serif;
+  background-color: var(--secondary-color); /* Use variable for background */
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: var(--text-color); /* Use variable for text color */
+}
+
+.table-container {
+  overflow-x: auto;
+  padding: 20px;
+  background-color: var(--background-color); /* Use variable for background */
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.user-table,
+.task-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.user-table th,
+.task-table th {
+  background-color: var(--secondary-color); /* Use variable for header background */
+  color: var(--text-color); /* Use variable for text color */
+  font-weight: bold;
+  padding: 10px;
+  text-align: center;
+}
+
+.user-table td,
+.task-table td {
+  border: 1px solid var(--border-color); /* Use variable for border */
+  padding: 10px;
+  text-align: center;
+  color: var(--text-color); /* Use variable for text color */
+}
+
+.actions-column {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.update-button,
+.delete-button {
+  padding: 8px 12px;
+  font-size: 0.9rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.update-button {
+  background-color: var(--primary-color); /* Use variable for button background */
+  color: var(--sidebar-text-color); /* Use variable for text color */
+}
+
+.update-button:hover {
+  background-color: var(--hover-color); /* Use variable for hover effect */
+}
+
+.delete-button {
+  background-color: #dc3545; /* Red for delete */
+  color: white;
+}
+
+.delete-button:hover {
+  background-color: #c82333; /* Darker red on hover */
+}
+
+.role-select,
+.username-input {
+  padding: 8px;
+  border: 1px solid var(--border-color); /* Use variable for border */
+  border-radius: 5px;
+  font-size: 1rem;
+  width: 100%;
+  max-width: 200px;
+  background-color: var(--secondary-color); /* Use variable for input background */
+  color: var(--text-color); /* Use variable for text color */
+}
+
+.role-select:focus,
+.username-input:focus {
+  border-color: var(--primary-color); /* Use variable for focus border */
+  box-shadow: 0 0 5px var(--primary-color); /* Subtle glow effect */
+}

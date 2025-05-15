@@ -1,0 +1,174 @@
+/* Task List Container */
+.task-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+  background-color: var(--secondary-color); /* Light mode background */
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+}
+
+html.dark-mode .task-list {
+  background-color: var(--background-color); /* Dark mode background */
+  color: var(--text-color); /* Dark mode text color */
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5); /* Adjust shadow for dark mode */
+}
+
+/* Task Card */
+.task-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border: 1px solid var(--border-color); /* Light mode border */
+  border-radius: 8px;
+  background-color: var(--secondary-color); /* Light mode card background */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden; /* Ensure the title banner aligns with the card */
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+html.dark-mode .task-card {
+  background-color: var(--background-color); /* Dark mode card background */
+  border: 1px solid var(--border-color); /* Dark mode border */
+}
+
+.task-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Task Header (Title Banner) */
+.task-header {
+  background-color: var(--th-color); /* Slightly darker shade of white */
+  padding: 10px 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border-color); /* Add a subtle border for separation */
+}
+
+html.dark-mode .task-header {
+  background-color: var(--th-color); /* Slightly lighter shade for dark mode */
+}
+
+
+.task-title {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: var(--text-color); /* Light mode text color */
+}
+
+html.dark-mode .task-title {
+  color: var(--text-color); /* Dark mode text color */
+}
+
+/* Priority Indicator */
+.priority-circle {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin-left: 10px;
+}
+
+.priority-high .priority-circle {
+  background-color: #dc3545; /* Red for high priority */
+}
+
+.priority-medium .priority-circle {
+  background-color: #ffc107; /* Yellow for medium priority */
+}
+
+.priority-low .priority-circle {
+  background-color: #28a745; /* Green for low priority */
+}
+
+/* Task Body */
+.task-body {
+  padding: 15px;
+  font-size: 0.9rem;
+  color: var(--text-color); /* Light mode text color */
+}
+
+html.dark-mode .task-body {
+  color: var(--text-color); /* Dark mode text color */
+}
+
+.task-description-box {
+  background-color: var(--secondary-color); /* Light mode description box */
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid var(--border-color);
+  margin-bottom: 10px;
+}
+
+html.dark-mode .task-description-box {
+  background-color: var(--background-color); /* Dark mode description box */
+  border: 1px solid var(--border-color); /* Dark mode border */
+}
+
+.task-description {
+  margin: 0;
+  font-size: 1rem;
+  color: var(--text-color); /* Light mode text color */
+}
+
+html.dark-mode .task-description {
+  color: var(--text-color); /* Dark mode text color */
+}
+
+.task-priority,
+.task-date,
+.task-status {
+  margin-bottom: 5px;
+  color: var(--text-color); /* Light mode text color */
+}
+
+html.dark-mode .task-priority,
+html.dark-mode .task-date,
+html.dark-mode .task-status {
+  color: var(--text-color); /* Dark mode text color */
+}
+
+/* Task Actions */
+.task-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  padding: 10px 15px;
+  border-top: 1px solid var(--border-color); /* Light mode border */
+}
+
+html.dark-mode .task-actions {
+  border-top: 1px solid var(--border-color); /* Dark mode border */
+}
+
+button {
+  padding: 8px 12px;
+  background-color: var(--primary-color); /* Button background */
+  color: white; /* Button text color */
+  border: none;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+  background-color: var(--hover-color); /* Hover effect */
+  transform: translateY(-2px); /* Slight lift effect */
+}
+
+button:active {
+  transform: translateY(0); /* Reset lift effect on click */
+}
+
+button[color="warn"] {
+  background-color: #dc3545; /* Red for delete button */
+  color: white;
+}
+
+button[color="warn"]:hover {
+  background-color: #b02a37; /* Darker red on hover */
+}

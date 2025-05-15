@@ -1,0 +1,33 @@
+<div class="update-task-container">
+  <h2>Update Task</h2>
+  <form (ngSubmit)="updateTask()" class="form-container">
+    <label>
+      Title:
+      <input [(ngModel)]="task.title" name="title" required />
+    </label>
+    <label>
+      Description:
+      <textarea [(ngModel)]="task.description" name="description" required></textarea>
+    </label>
+    <label>
+      Priority:
+      <select [(ngModel)]="task.priority" name="priority">
+        <option value="Low">Low</option>
+        <option value="Medium">Medium</option>
+        <option value="High">High</option>
+      </select>
+    </label>
+    <label>
+      Planned Completion Date:
+      <input [(ngModel)]="task.plannedCompletionDate" name="plannedCompletionDate" type="date" required />
+    </label>
+    <label>
+      Is Completed:
+      <input type="checkbox" [(ngModel)]="task.isCompleted" name="isCompleted" />
+    </label>
+    <div class="dialog-actions">
+      <button type="submit" mat-button>Save</button>
+      <button type="button" mat-button (click)="cancel()">Cancel</button>
+    </div>
+  </form>
+</div>

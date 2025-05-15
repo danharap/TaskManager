@@ -1,0 +1,147 @@
+/* Sidebar Base Styles */
+.sidebar {
+  width: 300px; /* Sidebar width */
+  height: 100vh; /* Full height */
+  background-color: var(--sidebar-color); /* Light mode background */
+  color: var(--sidebar-text-color); /* Light mode text color */
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  z-index: 1000; /* Ensure it stays above other elements */
+}
+
+html.dark-mode .sidebar {
+  background-color: var(--sidebar-color); /* Dark mode background */
+  color: var(--sidebar-text-color); /* Dark mode text color */
+}
+
+/* Sidebar Header */
+.sidebar-header {
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.sidebar-header h2 {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin: 0;
+  color: var(--sidebar-text-color); /* Use variable for text color */
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2); /* Subtle text shadow for better readability */
+}
+
+html.dark-mode .sidebar-header h2 {
+  color: var(--sidebar-text-color); /* Dark mode text color */
+}
+
+/* Sidebar Navigation Links */
+.sidebar-nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar-nav li {
+  margin-bottom: 15px;
+}
+
+.sidebar-nav a {
+  text-decoration: none;
+  color: var(--sidebar-text-color); /* Use variable for text color */
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 15px;
+  border-radius: 8px; /* Rounded corners */
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+html.dark-mode .sidebar-nav a {
+  color: var(--sidebar-text-color); /* Dark mode text color */
+}
+
+.sidebar-nav a.active {
+  font-weight: bold;
+  background-color: var(--hover-color); /* Highlight active link */
+  color: var(--sidebar-text-color); /* Ensure text remains readable */
+}
+
+html.dark-mode .sidebar-nav a.active {
+  background-color: var(--hover-color); /* Dark mode hover color for active links */
+}
+
+.sidebar-nav a:hover {
+  background-color: var(--hover-color); /* Hover effect */
+  transform: translateX(5px); /* Slight slide effect */
+}
+
+html.dark-mode .sidebar-nav a:hover {
+  background-color: var(--hover-color); /* Dark mode hover effect */
+}
+
+.sidebar-nav a i.icon {
+  font-size: 1.2rem;
+}
+
+/* Sidebar Footer */
+.sidebar-footer {
+  margin-top: auto; /* Push footer to the bottom */
+  text-align: center;
+  padding-top: 20px;
+  border-top: 1px solid var(--border-color); /* Subtle divider for light mode */
+}
+
+html.dark-mode .sidebar-footer {
+  border-top: 1px solid var(--border-color); /* Dark mode border color */
+}
+
+.sidebar-footer button {
+  padding: 10px 20px;
+  background-color: var(--primary-color); /* Button background */
+  color: var(--text-color); /* Button text color */
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+html.dark-mode .sidebar-footer button {
+  background-color: var(--primary-color); /* Dark mode button background */
+  color: var(--text-color); /* Ensure text is readable in dark mode */
+}
+
+.sidebar-footer button:hover {
+  background-color: var(--hover-color); /* Hover effect */
+  transform: translateY(-2px); /* Slight lift effect */
+}
+
+html.dark-mode .sidebar-footer button:hover {
+  background-color: var(--hover-color); /* Dark mode hover effect */
+}
+
+.sidebar-footer button:active {
+  transform: translateY(0); /* Reset lift effect on click */
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .sidebar {
+    width: 100%; /* Make the sidebar full-width on smaller screens */
+    height: auto; /* Adjust height for smaller screens */
+    position: relative; /* Remove fixed positioning */
+  }
+
+  .sidebar-nav a {
+    font-size: 0.9rem; /* Adjust font size for smaller screens */
+    padding: 8px 10px;
+  }
+
+  .sidebar-footer {
+    padding-top: 10px;
+  }
+}

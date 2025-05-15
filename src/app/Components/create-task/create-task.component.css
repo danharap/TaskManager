@@ -1,0 +1,105 @@
+main.create-task-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 30px; /* Adjust padding for better spacing */
+  background-color: var(--secondary-color); /* Use variable for background */
+  border-radius: 12px; /* Smooth edges */
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+  width: 90%; /* Use 90% of the viewport width */
+  max-width: 600px; /* Set a maximum width */
+  min-width: 400px; /* Ensure the dialog doesn't become too skinny */
+  max-height: 90vh; /* Ensure it doesn't exceed the viewport height */
+  overflow-y: auto; /* Add scrolling only if necessary */
+  margin: 50px auto; /* Center the form horizontally and vertically */
+  box-sizing: border-box; /* Include padding and border in the width */
+  font-family: 'Arial', sans-serif;
+}
+
+h2 {
+  text-align: center;
+  color: var(--text-color); /* Use variable for text color */
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  font-size: 1rem;
+  color: var(--text-color); /* Use variable for text color */
+  margin-bottom: 15px;
+}
+
+input,
+textarea,
+select {
+  padding: 12px; /* Increased padding for better usability */
+  font-size: 1rem;
+  border: 1px solid var(--border-color); /* Use variable for border */
+  border-radius: 8px;
+  outline: none;
+  background-color: var(--background-color); /* Use variable for input background */
+  color: var(--text-color); /* Use variable for text color */
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: var(--primary-color); /* Highlight border on focus */
+  box-shadow: 0 0 5px var(--primary-color); /* Subtle glow effect */
+}
+
+textarea {
+  resize: none;
+  height: 120px; /* Slightly taller for better usability */
+}
+
+button {
+  padding: 12px 20px;
+  background-color: var(--primary-color); /* Use variable for button background */
+  color: var(--text-color); /* Use variable for text color */
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+  background-color: var(--hover-color); /* Use variable for hover effect */
+  transform: translateY(-2px); /* Slight lift effect on hover */
+}
+
+button:active {
+  transform: translateY(0); /* Reset lift effect on click */
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.dialog-actions button {
+  flex: 1;
+  margin: 0 10px;
+}
+
+@media (max-width: 600px) {
+  main.create-task-container {
+    width: 95%; /* Use most of the screen width on smaller devices */
+    min-width: unset; /* Remove the minimum width for very small screens */
+    padding: 20px;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  button {
+    font-size: 0.9rem;
+    padding: 10px;
+  }
+}

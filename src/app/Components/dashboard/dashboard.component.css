@@ -1,0 +1,101 @@
+.dashboard-container {
+  padding: 40px 20px; /* Add padding: 40px for top/bottom, 20px for left/right */
+  max-width: 1200px;
+  margin: 0 auto;
+  font-family: 'Roboto', Arial, sans-serif;
+  background-color: var(--secondary-color); /* Use variable for background */
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  padding: 20px;
+  background-color: var(--background-color); /* Use variable for header background */
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-title h1 {
+  font-size: 2rem;
+  margin: 0;
+  color: var(--text-color); /* Use variable for text color */
+}
+
+.dashboard-title p {
+  font-size: 1rem;
+  color: var(--text-color); /* Use variable for text color */
+  margin: 5px 0 0;
+}
+
+.dashboard-role {
+  text-align: right;
+}
+
+.dashboard-role p {
+  font-size: 1rem;
+  color: var(--text-color); /* Use variable for text color */
+  margin: 0;
+}
+
+.dashboard-controls {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
+  align-items: center;
+}
+
+.create-task-button {
+  padding: 10px 15px;
+  background-color: var(--primary-color); /* Use variable for button background */
+  color: white;; /* Use variable for text color */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.create-task-button:hover {
+  background-color: var(--hover-color); /* Use variable for hover effect */
+  transform: translateY(-2px);
+}
+
+.search-input {
+  padding: 10px;
+  border: 1px solid var(--border-color); /* Use variable for border */
+  border-radius: 5px;
+  flex: 1;
+  background-color: var(--background-color); /* Use variable for input background */
+  color: var(--text-color); /* Use variable for text color */
+}
+
+.search-input:focus {
+  border-color: var(--primary-color); /* Use variable for focus border */
+  box-shadow: 0 0 5px var(--primary-color);
+}
+
+.sort-select,
+.priority-select {
+  padding: 5px;
+  border: 1px solid var(--border-color); /* Use variable for border */
+  border-radius: 5px;
+  background-color: var(--background-color); /* Use variable for select background */
+  color: var(--text-color); /* Use variable for text color */
+}
+
+.sort-select:hover,
+.priority-select:hover {
+  border-color: var(--primary-color); /* Use variable for hover border */
+}
+
+.task-list-container {
+  margin-top: 20px;
+  background-color: var(--background-color); /* Use variable for task list background */
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}

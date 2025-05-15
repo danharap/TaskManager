@@ -1,0 +1,122 @@
+/* Main Dialog Container */
+.update-username-dialog {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 30px;
+  background-color: var(--secondary-color); /* Light mode background */
+  border-radius: 12px; /* Smooth edges */
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+  width: 100%;
+  max-width: 500px; /* Limit the dialog width */
+  margin: 0 auto; /* Center the dialog */
+  font-family: 'Roboto', Arial, sans-serif;
+}
+
+html.dark-mode .update-username-dialog {
+  background-color: var(--background-color); /* Dark mode background */
+  color: var(--text-color); /* Dark mode text color */
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5); /* Adjust shadow for dark mode */
+}
+
+/* Header */
+h2 {
+  text-align: center;
+  color: var(--text-color); /* Use variable for text color */
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+html.dark-mode h2 {
+  color: var(--text-color); /* Ensure readability in dark mode */
+}
+
+/* Form Labels */
+label {
+  display: flex;
+  flex-direction: column;
+  font-size: 1rem;
+  color: var(--text-color); /* Use variable for text color */
+  margin-bottom: 15px;
+}
+
+html.dark-mode label {
+  color: var(--text-color); /* Ensure labels are readable in dark mode */
+}
+
+/* Input Fields */
+input {
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid var(--border-color); /* Use variable for border */
+  border-radius: 8px;
+  outline: none;
+  background-color: var(--secondary-color); /* Light mode input background */
+  color: var(--text-color); /* Use variable for text color */
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+html.dark-mode input {
+  background-color: var(--background-color); /* Dark mode input background */
+  color: var(--text-color); /* Ensure text is readable in dark mode */
+  border: 1px solid var(--border-color); /* Dark mode border */
+}
+
+input:focus {
+  border-color: var(--primary-color); /* Highlight border on focus */
+  box-shadow: 0 0 5px var(--primary-color); /* Subtle glow effect */
+}
+
+/* Dialog Actions */
+.dialog-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px; /* Add spacing between buttons */
+  margin-top: 20px;
+}
+
+button {
+  padding: 10px 20px;
+  background-color: var(--primary-color); /* Button background */
+  color: var(--text-color); /* Button text color */
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+  background-color: var(--hover-color); /* Hover effect */
+  transform: translateY(-2px); /* Slight lift effect */
+}
+
+button:active {
+  transform: translateY(0); /* Reset lift effect on click */
+}
+
+button[color="warn"] {
+  background-color: #dc3545; /* Red for cancel button */
+  color: white;
+}
+
+button[color="warn"]:hover {
+  background-color: #b02a37; /* Darker red on hover */
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .update-username-dialog {
+    width: 95%; /* Use most of the screen width on smaller devices */
+    padding: 20px;
+  }
+
+  h2 {
+    font-size: 1.2rem;
+  }
+
+  button {
+    font-size: 0.9rem;
+    padding: 8px 15px;
+  }
+}

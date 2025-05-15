@@ -1,0 +1,46 @@
+<div class="analytics-dashboard">
+  <h2>Task Analytics</h2>
+
+  <!-- Summary Cards -->
+  <div class="summary-cards">
+    <div class="card">
+      <h3>Total Tasks</h3>
+      <p>{{ totalTasks }}</p>
+    </div>
+    <div class="card">
+      <h3>Completed Tasks</h3>
+      <p>{{ completedTasks }}</p>
+    </div>
+    <div class="card">
+      <h3>Overdue Tasks</h3>
+      <p>{{ overdueTasks }}</p>
+    </div>
+  </div>
+
+  <!-- Priority Distribution -->
+  <div class="priority-distribution">
+    <h3>Task Distribution by Priority</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Priority</th>
+          <th>Count</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Low</td>
+          <td>{{ priorityDistribution['Low'] }}</td>
+        </tr>
+        <tr>
+          <td>Medium</td>
+          <td>{{ priorityDistribution['Medium'] }}</td>
+        </tr>
+        <tr>
+          <td>High</td>
+          <td>{{ priorityDistribution['High'] }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

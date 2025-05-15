@@ -1,0 +1,35 @@
+<main class="task-dialog-container">
+  <h2 *ngIf="!isNewTask">Edit Task</h2>
+  <h2 *ngIf="isNewTask">Create Task</h2>
+  <form>
+    <label>
+      Title:
+      <input [(ngModel)]="task.title" name="title" required />
+    </label>
+    <label>
+      Description:
+      <textarea [(ngModel)]="task.description" name="description" required></textarea>
+    </label>
+    <label>
+      Priority:
+      <select [(ngModel)]="task.priority" name="priority">
+        <option value="Low">Low</option>
+        <option value="Medium">Medium</option>
+        <option value="High">High</option>
+      </select>
+    </label>
+    <label>
+      Planned Completion Date:
+      <input
+        [(ngModel)]="formattedPlannedCompletionDate"
+        name="plannedCompletionDate"
+        type="date"
+        required
+      />
+    </label>
+    <div class="dialog-actions">
+      <button type="button" mat-button (click)="saveTask()">Save</button>
+      <button type="button" mat-button (click)="closeDialog()">Cancel</button>
+    </div>
+  </form>
+</main>

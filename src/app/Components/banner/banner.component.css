@@ -1,0 +1,63 @@
+.banner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--secondary-color); /* Use variable for background */
+  color: var(--text-color); /* Use variable for text color */
+  padding: 10px 20px; /* Add padding for spacing */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000; /* Ensure it stays above other elements */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+.banner-left h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: var(--text-color); /* Use variable for text color */
+}
+
+.banner-right {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 15px; /* Increase spacing between elements */
+  flex-shrink: 0; /* Prevent the right section from shrinking */
+  max-width: 100%; /* Ensure it doesn't overflow the banner */
+}
+
+.status {
+  display: flex;
+  align-items: center;
+  font-size: 1rem;
+  color: var(--text-color); /* Use variable for text color */
+}
+
+.status-icon {
+  font-size: 20px; /* Adjust the size of the icon */
+  color: var(--primary-color); /* Use variable for icon color */
+  margin-right: 5px; /* Add spacing between the icon and the text */
+}
+
+button.sign-out {
+  padding: 10px;
+  background-color: var(--primary-color); /* Blue background */
+  color: white; /* Change text color to white */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button.sign-out:hover {
+  background-color: var(--hover-color); /* Use variable for hover effect */
+  transform: translateY(-2px); /* Slight lift effect on hover */
+}
+
+.icon {
+  margin-right: 5px;
+  font-size: 1.2rem;
+  color: var(--primary-color); /* Use variable for icon color */
+}

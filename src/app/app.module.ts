@@ -1,18 +1,68 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { UpdateTaskComponent } from './update-task/update-task.component';
+import { DashboardComponent } from './Components/dashboard/dashboard.component';
+import { TaskListComponent } from './Components/task-list/task-list.component';
+import { CreateTaskComponent } from './Components/create-task/create-task.component';
+import { LoginComponent } from './Components/login/login.component';
+import { RegisterComponent } from './Components/register/register.component';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './services/auth.interceptor';
+import { AdminComponent } from './Components/admin/admin.component';
+import { BannerComponent } from './Components/banner/banner.component';
+import { SidebarComponent } from './Components/sidebar/sidebar.component';
+import { SettingsComponent } from './Components/settings/settings.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
+import { CalendarComponent } from './Components/calendar/calendar.component';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { TaskDialogComponent } from './Components/task-dialog/task-dialog.component';
+import { UpdateUsernameDialogComponent } from './Components/update-username-dialog/update-username-dialog.component';
+import { UpdateRoleDialogComponent } from './Components/update-role-dialog/update-role-dialog.component';
+import { AnalyticsDashboardComponent } from './Components/analytics-dashboard/analytics-dashboard.component';
+
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    UpdateTaskComponent,
+    DashboardComponent,
+    TaskListComponent,
+    CreateTaskComponent,
+    LoginComponent,
+    RegisterComponent,
+    AdminComponent,
+    BannerComponent,
+    SidebarComponent,
+    SettingsComponent,
+    CalendarComponent,
+    TaskDialogComponent,
+    UpdateUsernameDialogComponent,
+    UpdateRoleDialogComponent,
+    AnalyticsDashboardComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule,
+    FormsModule,
+    MatDialogModule,
+    MatIconModule,
+    BrowserAnimationsModule, // Add this
+    CalendarModule.forRoot({
+      provide: DateAdapter,
+      useFactory: adapterFactory,
+    }),
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+  ],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

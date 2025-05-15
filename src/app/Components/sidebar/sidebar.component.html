@@ -1,0 +1,39 @@
+<div class="sidebar">
+  <div class="sidebar-header">
+    <h2>Angular Task App</h2>
+  </div>
+  <nav class="sidebar-nav">
+    <ul>
+      <li>
+        <a routerLink="/dashboard" routerLinkActive="active">
+          <i class="icon">📋</i> Tasks
+        </a>
+      </li>
+      <li>
+        <a routerLink="/settings" routerLinkActive="active">
+          <i class="icon">⚙️</i> Settings
+        </a>
+      </li>
+      <li>
+        <a routerLink="/calendar" routerLinkActive="active">
+          <i class="icon">📅</i> Calendar
+        </a>
+      </li>
+      <li>
+        <a routerLink="/analytics" routerLinkActive="active">
+          <i class="icon">📊</i> Analytics
+        </a>
+      </li>
+      <li *ngIf="userRole === 'Admin'">
+        <a routerLink="/admin" [queryParams]="{ view: 'tasks' }" routerLinkActive="active">
+          <i class="icon">🛠️</i> Manage Tasks
+        </a>
+      </li>
+      <li *ngIf="userRole === 'Admin'">
+        <a routerLink="/admin" [queryParams]="{ view: 'users' }" routerLinkActive="active">
+          <i class="icon">👥</i> Manage Users
+        </a>
+      </li>
+    </ul>
+  </nav>
+</div>

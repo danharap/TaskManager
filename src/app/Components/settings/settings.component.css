@@ -1,0 +1,161 @@
+.settings-container {
+  padding: 40px;
+  max-width: 800px;
+  margin: 50px auto 0;
+  font-family: 'Roboto', Arial, sans-serif;
+  background-color: var(--secondary-color); /* Use variable for background */
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.settings-container.dark-mode {
+  background-color: var(--background-color); /* Dark mode background */
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: var(--text-color); /* Use variable for text color */
+}
+
+h2.dark-mode {
+  color: var(--text-color); /* Ensure text is readable in dark mode */
+}
+
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1rem;
+  color: var(--text-color); /* Use variable for text color */
+}
+
+.theme-toggle.dark-mode {
+  color: var(--text-color); /* Ensure toggle label is readable in dark mode */
+}
+
+.theme-toggle input {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.current-info {
+  margin-bottom: 30px;
+  background-color: var(--background-color); /* Use variable for background */
+  padding: 20px;
+  border-radius: 8px;
+  color: var(--text-color); /* Use variable for text color */
+}
+
+.current-info.dark-mode {
+  background-color: var(--secondary-color); /* Dark mode background */
+  color: var(--text-color); /* Ensure text is readable in dark mode */
+}
+
+.current-info h3 {
+  margin-bottom: 15px;
+  color: var(--text-color); /* Use variable for text color */
+}
+
+.current-info h3.dark-mode {
+  color: var(--text-color); /* Ensure headers are readable in dark mode */
+}
+
+.current-info p {
+  margin: 5px 0;
+  font-size: 1rem;
+  color: var(--text-color); /* Use variable for text color */
+}
+
+.current-info p.dark-mode {
+  color: var(--text-color); /* Ensure paragraphs are readable in dark mode */
+}
+
+.change-section {
+  margin-bottom: 30px;
+}
+
+h3 {
+  margin-bottom: 15px;
+  color: var(--text-color); /* Use variable for text color */
+}
+
+h3.dark-mode {
+  color: var(--text-color); /* Ensure headers are readable in dark mode */
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+label {
+  font-size: 1rem;
+  color: var(--text-color); /* Use variable for text color */
+}
+
+label.dark-mode {
+  color: var(--text-color); /* Ensure labels are readable in dark mode */
+}
+
+input {
+  padding: 10px;
+  border: 1px solid var(--border-color); /* Use variable for border */
+  border-radius: 5px;
+  outline: none;
+  background-color: var(--background-color); /* Use variable for input background */
+  color: var(--text-color); /* Use variable for text color */
+}
+
+input:focus {
+  border-color: var(--primary-color); /* Highlight border on focus */
+  box-shadow: 0 0 5px var(--primary-color); /* Subtle glow effect */
+}
+
+input.dark-mode {
+  background-color: var(--secondary-color); /* Dark mode input background */
+  color: var(--text-color); /* Ensure input text is readable in dark mode */
+}
+
+
+button {
+  padding: 10px 15px;
+  background-color: var(--primary-color); /* Button background */
+  color: white; /* Button text color */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+  background-color: var(--hover-color); /* Hover effect */
+  transform: translateY(-2px); /* Slight lift effect */
+}
+
+.message {
+  margin-top: 10px;
+  font-size: 0.9rem;
+  color: var(--text-color); /* Use variable for text color */
+}
+
+.message.dark-mode {
+  color: #28a745; /* Keep success messages readable in dark mode */
+}
+
+.message.error {
+  color: #dc3545; /* Red for error messages */
+}
+
+.message.error.dark-mode {
+  color: #dc3545; /* Keep error messages readable in dark mode */
+}

@@ -1,0 +1,13 @@
+{
+  "SIDEBAR": {
+    "TASKS": "Tasks",
+    "SETTINGS": "Settings",
+    "CALENDAR": "Calendar",
+    "ANALYTICS": "Analytics",
+    "ANIMATIONS": "Animations",
+    "MANAGE_TASKS": "Manage Tasks",
+    "MANAGE_USERS": "Manage Users",
+    "SIGN_OUT": "Sign Out",
+    "APP_TITLE": "Angular Task App"
+  }
+}

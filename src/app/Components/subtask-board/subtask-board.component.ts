@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TaskService } from '../../services/task.service';
 import { SubTaskModel } from '../../models/task.model';
+import { Location } from '@angular/common';
+
 
 @Component({
   selector: 'app-subtask-board',
@@ -17,12 +19,17 @@ export class SubtaskBoardComponent implements OnInit {
   newSubTaskTitle = '';
   viewingSubtask: SubTaskModel | null = null;
 
-  constructor(private route: ActivatedRoute, private taskService: TaskService) {}
+  constructor(private route: ActivatedRoute, private taskService: TaskService, private location: Location) {}
 
   ngOnInit() {
     this.taskId = +this.route.snapshot.paramMap.get('id')!;
     this.loadSubTasks();
   }
+
+    goBack() {
+    this.location.back();
+  }
+
     startEditSubtask(subtask: SubTaskModel) {
     this.editingSubtaskId = subtask.id;
     this.editSubtaskData = { ...subtask };
@@ -96,11 +103,22 @@ saveViewingSubtask() {
   }
 
   deleteSubTask(subtask: SubTaskModel) {
-    this.taskService.deleteSubTask(subtask.id).subscribe(() => {
-      this.loadSubTasks();
-    });
-  }
+  this.taskService.deleteSubTask(subtask.id).subscribe({
+    next: () => this.loadSubTasks(),
+    error: (err) => console.error('Failed to delete subtask:', err)
+  });
+}
     getSubtasksByStatus(status: string) {
     return this.subtasks.filter((subtask: any) => subtask.status === status);
   }
+
+  changeSubtaskStatus(subtask: SubTaskModel, newStatus: string) {
+  if (subtask.status !== newStatus) {
+    subtask.status = newStatus;
+    this.taskService.updateSubTask(subtask.id, subtask).subscribe(() => {
+      this.loadSubTasks();
+    });
+  }
+}
+
 }

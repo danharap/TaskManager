@@ -1,0 +1,19 @@
+<div class="animations-gallery">
+  <h2>Angular Animations Gallery</h2>
+  <div class="animation-demo">
+    <button (click)="showFade = !showFade">Toggle Fade</button>
+    <div *ngIf="showFade" @fadeInOut class="animated-box">Fade In/Out</div>
+  </div>
+  <div class="animation-demo">
+    <button (click)="showSlide = !showSlide">Toggle Slide</button>
+    <div *ngIf="showSlide" @slideInOut class="animated-box">Slide In/Out</div>
+  </div>
+  <div class="animation-demo">
+    <button (click)="showScale = !showScale">Toggle Scale</button>
+    <div *ngIf="showScale" @scaleInOut class="animated-box">Scale In/Out</div>
+  </div>
+  <div class="animation-demo">
+    <button (click)="showRotate = !showRotate">Toggle Rotate</button>
+    <div *ngIf="showRotate" @rotateInOut class="animated-box">Rotate In/Out</div>
+  </div>
+</div>

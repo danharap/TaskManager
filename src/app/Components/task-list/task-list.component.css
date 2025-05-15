@@ -51,6 +51,11 @@ html.dark-mode .task-card {
 html.dark-mode .task-header {
   background-color: var(--th-color); /* Slightly lighter shade for dark mode */
 }
+.task-actions .material-icons {
+  font-size: 18px;
+  vertical-align: middle;
+  margin-right: 4px;
+}
 
 
 .task-title {

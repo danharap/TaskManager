@@ -1,4 +1,7 @@
 <div class="subtask-board-container">
+  <button class="back-btn" (click)="goBack()" aria-label="Back">
+    <span class="material-icons">arrow_back</span> Back
+  </button>
   <h2>Subtasks Board</h2>
   <div class="kanban-board">
     <div class="kanban-column" *ngFor="let status of statuses">
@@ -9,15 +12,7 @@
           *ngFor="let subtask of getSubtasksByStatus(status)"
           [attr.aria-label]="subtask.title"
         >
-          <button
-            class="arrow-btn"
-            aria-label="Move left"
-            (click)="moveSubTask(subtask, -1); $event.stopPropagation()"
-            [disabled]="statuses.indexOf(subtask.status) === 0"
-            title="Move to previous column"
-          >
-            <span class="material-icons">arrow_back</span>
-          </button>
+          <!-- Title (clickable for dialog) -->
           <span
             class="task-title clickable"
             [title]="subtask.title"
@@ -25,15 +20,16 @@
           >
             {{ subtask.title }}
           </span>
-          <button
-            class="arrow-btn"
-            aria-label="Move right"
-            (click)="moveSubTask(subtask, 1); $event.stopPropagation()"
-            [disabled]="statuses.indexOf(subtask.status) === statuses.length - 1"
-            title="Move to next column"
+          <!-- Status Dropdown (below the title) -->
+          <select
+            class="status-select"
+            [ngModel]="subtask.status"
+            (ngModelChange)="changeSubtaskStatus(subtask, $event)"
+            aria-label="Change subtask status"
           >
-            <span class="material-icons">arrow_forward</span>
-          </button>
+            <option *ngFor="let s of statuses" [value]="s">{{ s }}</option>
+          </select>
+          <!-- Delete Button (bottom right) -->
           <button
             class="delete-btn"
             aria-label="Delete subtask"
@@ -44,13 +40,13 @@
           </button>
         </div>
       </div>
-      <div *ngIf="status === 'To Do'" class="add-subtask-form">
-        <input [(ngModel)]="newSubTaskTitle" placeholder="New subtask title" aria-label="New subtask title" />
-        <button (click)="addSubTask()" [disabled]="!newSubTaskTitle.trim()">Add</button>
-      </div>
     </div>
   </div>
-
+  <!-- Add Subtask Form BELOW all columns -->
+  <div class="add-subtask-form">
+    <input [(ngModel)]="newSubTaskTitle" placeholder="New subtask title" aria-label="New subtask title" />
+    <button (click)="addSubTask()" [disabled]="!newSubTaskTitle.trim()">Add</button>
+  </div>
   <!-- Subtask View/Edit Dialog -->
   <div *ngIf="viewingSubtask" class="subtask-view-dialog">
     <div class="subtask-view-content">

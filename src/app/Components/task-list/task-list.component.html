@@ -31,9 +31,18 @@
 
     <!-- Task Actions -->
     <div class="task-actions">
-      <button mat-button (click)="viewSubTasks.emit(task)">View Subtasks</button>
-      <button mat-button (click)="editTask.emit(task)">Edit</button>
-      <button mat-button color="warn" (click)="deleteTask.emit(task.id)">Delete</button>
-    </div>
+    <button mat-button (click)="viewSubTasks.emit(task)">
+      <span class="material-icons" style="font-size: 18px; vertical-align: middle; margin-right: 4px;">visibility</span>
+      View Subtasks
+    </button>
+    <button mat-button (click)="editTask.emit(task)">
+      <span class="material-icons" style="font-size: 18px; vertical-align: middle; margin-right: 4px;">edit</span>
+      Edit
+    </button>
+    <button mat-button color="warn" (click)="deleteTask.emit(task.id)">
+      <span class="material-icons" style="font-size: 18px; vertical-align: middle; margin-right: 4px;">delete</span>
+      Delete
+    </button>
+  </div>
   </div>
 </div>

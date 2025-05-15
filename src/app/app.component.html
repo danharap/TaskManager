@@ -1,9 +1,10 @@
 <div class="app-container" [class.auth-page]="isAuthPage()">
-  <app-banner></app-banner> <!-- Always show the banner -->
+  <app-banner></app-banner>
   <div class="main-content" [class.sidebar-visible]="!isAuthPage()">
     <div class="content">
       <router-outlet></router-outlet>
     </div>
-    <app-sidebar *ngIf="!isAuthPage()"></app-sidebar> <!-- Sidebar on the right -->
+    <app-sidebar *ngIf="!isAuthPage()"></app-sidebar>
   </div>
+  <app-fab-create-task *ngIf="!isAuthPage()"></app-fab-create-task>
 </div>

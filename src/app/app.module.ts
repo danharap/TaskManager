@@ -27,7 +27,15 @@ import { UpdateUsernameDialogComponent } from './Components/update-username-dial
 import { UpdateRoleDialogComponent } from './Components/update-role-dialog/update-role-dialog.component';
 import { AnalyticsDashboardComponent } from './Components/analytics-dashboard/analytics-dashboard.component';
 import { SubtaskBoardComponent } from './Components/subtask-board/subtask-board.component';
+import { AnimationsComponent } from './Components/animations/animations.component';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { HttpClient } from '@angular/common/http';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { FabCreateTaskComponent } from './Components/fab-create-task/fab-create-task.component';
 
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
 
 @NgModule({
   declarations: [
@@ -48,6 +56,8 @@ import { SubtaskBoardComponent } from './Components/subtask-board/subtask-board.
     UpdateRoleDialogComponent,
     AnalyticsDashboardComponent,
     SubtaskBoardComponent,
+    AnimationsComponent,
+    FabCreateTaskComponent,
   ],
   imports: [
     BrowserModule,
@@ -61,6 +71,7 @@ import { SubtaskBoardComponent } from './Components/subtask-board/subtask-board.
       provide: DateAdapter,
       useFactory: adapterFactory,
     }),
+    TranslateModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

@@ -1,0 +1,13 @@
+{
+  "SIDEBAR": {
+    "TASKS": "Tâches",
+    "SETTINGS": "Paramètres",
+    "CALENDAR": "Calendrier",
+    "ANALYTICS": "Analytique",
+    "ANIMATIONS": "Animations",
+    "MANAGE_TASKS": "Gérer les tâches",
+    "MANAGE_USERS": "Gérer les utilisateurs",
+    "SIGN_OUT": "Déconnexion",
+    "APP_TITLE": "Application de tâches Angular"
+  }
+}

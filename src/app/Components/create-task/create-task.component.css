@@ -59,7 +59,7 @@ textarea {
 button {
   padding: 12px 20px;
   background-color: var(--primary-color); /* Use variable for button background */
-  color: var(--text-color); /* Use variable for text color */
+  color: var(--sidebar-text-color); /* Use variable for text color */
   border: none;
   border-radius: 8px;
   font-size: 1rem;

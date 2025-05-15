@@ -1,0 +1,38 @@
+.animations-gallery {
+  padding: 40px 20px;
+  max-width: 700px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.animation-demo {
+  margin-bottom: 32px;
+}
+
+.animated-box {
+  margin: 18px auto 0;
+  padding: 32px;
+  background: var(--secondary-color);
+  color: var(--text-color);
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+  font-size: 1.2rem;
+  max-width: 350px;
+  transition: background 0.3s;
+}
+
+button {
+  background: var(--primary-color);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 18px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-bottom: 8px;
+  transition: background 0.2s;
+}
+
+button:hover {
+  background: var(--hover-color);
+}

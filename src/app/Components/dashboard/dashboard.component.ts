@@ -2,11 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { TaskService } from '../../services/task.service';
 import { TaskModel } from '../../models/task.model';
 import { Router } from '@angular/router';
+import { NotificationService } from '../../services/notification.service';
 import { AuthService } from '../../services/auth.service';
 import { CreateTaskComponent } from '../create-task/create-task.component';
 import { MatDialog } from '@angular/material/dialog';
 import { UpdateTaskComponent } from '../../update-task/update-task.component';
-
+import { ToastService } from '../../services/toast.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-dashboard',
@@ -24,18 +26,25 @@ export class DashboardComponent implements OnInit {
   name: string | null = null;
   allTasks: TaskModel[] = [];
 
+  tasksChangedSub!: Subscription;
+
   constructor(private taskService: TaskService,
     private authService: AuthService,
     private router: Router,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private notificationService: NotificationService,
+    private toastService: ToastService
   ) {}
 
   ngOnInit() {
     this.userRole = localStorage.getItem('userRole');
     this.name = localStorage.getItem('userName');
     this.getTasks();
-  }
 
+    this.tasksChangedSub = this.taskService.tasksChanged$.subscribe(() => {
+      this.getTasks();
+    });
+  }
   logout() {
     this.authService.logout();
     this.router.navigate(['/login']);
@@ -63,10 +72,16 @@ export class DashboardComponent implements OnInit {
   }
 
   onTaskCreated(task: TaskModel) {
-    this.taskService.addTask(task).subscribe({ 
-      next: () => {
+    this.taskService.addTask(task).subscribe({
+      next: (createdTask) => {
         this.getTasks();
         this.showCreateTask = false;
+        // Send notification
+        this.notificationService.createNotification({
+          type: 'TaskCreated',
+          message: `Task "${createdTask.title}" was created.`,
+        }).subscribe();
+        this.toastService.show(`Task "${createdTask.title}" created!`, 'TaskCreated');
       }
     });
   }
@@ -84,30 +99,41 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  onEditTask(task: TaskModel) {
-    const dialogRef = this.dialog.open(UpdateTaskComponent, {
-      width: '60px',
-      panelClass: 'custom-dialog-container', // Optional: Add custom styling
-      data: { task } // Pass the selected task to the dialog
-    });
+onEditTask(task: TaskModel) {
+  const dialogRef = this.dialog.open(UpdateTaskComponent, {
+    width: '60px',
+    panelClass: 'custom-dialog-container',
+    data: { task }
+  });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        this.getTasks(); // Refresh the task list after updating
-      }
-    });
-  }
+  dialogRef.afterClosed().subscribe((result) => {
+    if (result) {
+      this.getTasks();
+      this.notificationService.createNotification({
+        type: 'TaskUpdated',
+        message: `Task "${task.title}" was updated.`,
+      }).subscribe();
+      this.toastService.show(`Task "${task.title}" updated!`, 'TaskUpdated');
+    }
+  });
+}
 
-  onDeleteTask(id: number) {
-    this.taskService.deleteTask(id).subscribe({
-      next: () => {
-        this.getTasks(); // Refresh the list after deletion
-      },
-      error: (error) => {
-        console.error('Error deleting task:', error);
-      }
-    });
-  }
+onDeleteTask(id: number) {
+  const task = this.tasks.find(t => t.id === id);
+  this.taskService.deleteTask(id).subscribe({
+    next: () => {
+      this.getTasks();
+      this.notificationService.createNotification({
+        type: 'TaskDeleted',
+        message: `Task "${task?.title || 'Unknown'}" was deleted.`,
+      }).subscribe();
+      this.toastService.show(`Task "${task?.title || 'Unknown'}" deleted!`, 'TaskDeleted');
+    },
+    error: (error) => {
+      this.toastService.show('Failed to delete task.', 'error');
+    }
+  });
+}
 
   filterTasks() {
     let filtered = this.tasks.filter(task =>

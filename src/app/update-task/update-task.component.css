@@ -95,7 +95,7 @@ textarea {
   flex: 1;
   padding: 12px 20px;
   background-color: var(--primary-color); /* Button background */
-  color: var(--text-color); /* Button text color */
+  color: var(--sidebar-text-color); /* Button text color */
   border: none;
   border-radius: 8px;
   font-size: 1rem;

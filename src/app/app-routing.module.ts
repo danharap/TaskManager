@@ -9,6 +9,7 @@ import { CalendarComponent } from './Components/calendar/calendar.component';
 import { AnalyticsDashboardComponent } from './Components/analytics-dashboard/analytics-dashboard.component';
 import { SubtaskBoardComponent } from './Components/subtask-board/subtask-board.component';
 import { AnimationsComponent} from './Components/animations/animations.component'
+import { NotificationsComponent} from './Components/notifications/notifications.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -22,7 +23,8 @@ const routes: Routes = [
   { path: 'admin/users', component: AdminComponent },
   { path: 'analytics', component: AnalyticsDashboardComponent }, 
   { path: 'tasks/:id/subtasks', component: SubtaskBoardComponent },
-  { path: 'animations', component: AnimationsComponent }
+  { path: 'animations', component: AnimationsComponent },
+  { path: 'notifications', component: NotificationsComponent }
 ];
 
 @NgModule({

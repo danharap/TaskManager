@@ -3,6 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { TaskService } from '../../services/task.service';
 import { SubTaskModel } from '../../models/task.model';
 import { Location } from '@angular/common';
+import { NotificationService } from '../../services/notification.service';
+import { ToastService } from '../../services/toast.service';
 
 
 @Component({
@@ -19,7 +21,7 @@ export class SubtaskBoardComponent implements OnInit {
   newSubTaskTitle = '';
   viewingSubtask: SubTaskModel | null = null;
 
-  constructor(private route: ActivatedRoute, private taskService: TaskService, private location: Location) {}
+  constructor(private route: ActivatedRoute, private taskService: TaskService, private location: Location, private notificationService: NotificationService, private toastService: ToastService ) {}
 
   ngOnInit() {
     this.taskId = +this.route.snapshot.paramMap.get('id')!;
@@ -56,6 +58,11 @@ openSubtaskDialog(subtask: SubTaskModel) {
 saveViewingSubtask() {
   if (!this.viewingSubtask?.title?.trim()) return;
   this.taskService.updateSubTask(this.viewingSubtask.id, this.viewingSubtask).subscribe(() => {
+    this.notificationService.createNotification({
+      type: 'SubTaskUpdated',
+      message: `Subtask "${this.viewingSubtask?.title}" was updated.`,
+    }).subscribe();
+    this.toastService.show(`Subtask "${this.viewingSubtask?.title}" updated!`, 'SubTaskUpdated');
     this.viewingSubtask = null;
     this.loadSubTasks();
   });
@@ -76,21 +83,26 @@ saveViewingSubtask() {
     });
   }
 
-  addSubTask() {
-    if (!this.newSubTaskTitle.trim()) return;
-    const subTask: SubTaskModel = {
-      id: 0,
-      title: this.newSubTaskTitle,
-      description: '',
-      isCompleted: false,
-      taskId: this.taskId,
-      status: 'To Do'
-    };
-    this.taskService.addSubTask(this.taskId, subTask).subscribe(() => {
-      this.newSubTaskTitle = '';
-      this.loadSubTasks();
-    });
-  }
+addSubTask() {
+  if (!this.newSubTaskTitle.trim()) return;
+  const subTask: SubTaskModel = {
+    id: 0,
+    title: this.newSubTaskTitle,
+    description: '',
+    isCompleted: false,
+    taskId: this.taskId,
+    status: 'To Do'
+  };
+  this.taskService.addSubTask(this.taskId, subTask).subscribe((createdSubTask) => {
+    this.newSubTaskTitle = '';
+    this.loadSubTasks();
+    this.notificationService.createNotification({
+      type: 'SubTaskCreated',
+      message: `Subtask "${createdSubTask.title}" was created.`,
+    }).subscribe();
+    this.toastService.show(`Subtask "${createdSubTask.title}" created!`, 'SubTaskCreated');
+  });
+}
 
   moveSubTask(subtask: SubTaskModel, direction: number) {
     const currentIdx = this.statuses.indexOf(subtask.status);
@@ -102,21 +114,38 @@ saveViewingSubtask() {
     });
   }
 
-  deleteSubTask(subtask: SubTaskModel) {
+deleteSubTask(subtask: SubTaskModel) {
   this.taskService.deleteSubTask(subtask.id).subscribe({
-    next: () => this.loadSubTasks(),
-    error: (err) => console.error('Failed to delete subtask:', err)
+    next: () => {
+      this.loadSubTasks();
+      this.notificationService.createNotification({
+        type: 'SubTaskDeleted',
+        message: `Subtask "${subtask.title}" was deleted.`,
+      }).subscribe();
+      this.toastService.show(`Subtask "${subtask.title}" deleted!`, 'SubTaskDeleted');
+      this.closeViewSubtask(); // Close dialog if open
+    },
+    error: (err) => {
+      this.toastService.show('Failed to delete subtask.', 'error');
+    }
   });
 }
+
     getSubtasksByStatus(status: string) {
     return this.subtasks.filter((subtask: any) => subtask.status === status);
   }
 
-  changeSubtaskStatus(subtask: SubTaskModel, newStatus: string) {
+changeSubtaskStatus(subtask: SubTaskModel, newStatus: string) {
   if (subtask.status !== newStatus) {
+    const oldStatus = subtask.status;
     subtask.status = newStatus;
     this.taskService.updateSubTask(subtask.id, subtask).subscribe(() => {
       this.loadSubTasks();
+      this.notificationService.createNotification({
+        type: 'SubTaskStatusChanged',
+        message: `Subtask "${subtask.title}" status changed from "${oldStatus}" to "${newStatus}".`,
+      }).subscribe();
+      this.toastService.show(`Subtask "${subtask.title}" moved to "${newStatus}"!`, 'SubTaskStatusChanged');
     });
   }
 }

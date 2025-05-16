@@ -1,3 +1,4 @@
+<app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
 <main class="auth-container">
   <div class="auth-card">
     <h2>Welcome Back</h2>
@@ -15,7 +16,8 @@
       <div *ngIf="message" class="error-message">{{ message }}</div>
     </form>
     <p class="switch-auth">
-      Don't have an account? <a routerLink="/register">Sign up here</a>
+      Don't have an account?
+      <a routerLink="/register">Sign up here</a>
     </p>
   </div>
 </main>

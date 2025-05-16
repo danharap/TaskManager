@@ -1,3 +1,5 @@
+<app-toast></app-toast>
+<app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
 <div class="app-container" [class.auth-page]="isAuthPage()">
   <app-banner></app-banner>
   <div class="main-content" [class.sidebar-visible]="!isAuthPage()">
@@ -6,5 +8,5 @@
     </div>
     <app-sidebar *ngIf="!isAuthPage()"></app-sidebar>
   </div>
-  <app-fab-create-task *ngIf="!isAuthPage()"></app-fab-create-task>
+  <app-fab-create-task *ngIf="!isAuthPage()" (createClicked)="openCreateTaskDialog()"></app-fab-create-task>
 </div>

@@ -159,3 +159,27 @@ button:hover {
 .message.error.dark-mode {
   color: #dc3545; /* Keep error messages readable in dark mode */
 }
+
+.delete-account-btn {
+  background: #dc3545;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 22px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background 0.2s;
+}
+.delete-account-btn:hover {
+  background: #b52a37;
+}
+.danger-text {
+  color: #dc3545;
+  margin-top: 8px;
+}
+.danger-section {
+  border-top: 1px solid #dc3545;
+  margin-top: 32px;
+  padding-top: 18px;
+}

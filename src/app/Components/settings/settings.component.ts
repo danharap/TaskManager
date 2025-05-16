@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { ThemeService } from '../../services/theme.service';
-
+import {ToastService } from '../../services/toast.service';
+import { NotificationService } from '../../services/notification.service'
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
@@ -23,27 +24,60 @@ export class SettingsComponent {
   confirmNewPassword = '';
   passwordMessage = '';
 
-  constructor(private authService: AuthService, private themeService: ThemeService) {}
+  constructor(private authService: AuthService, private themeService: ThemeService, private toastService: ToastService, private notificationService: NotificationService) {}
 
-  // Change Username
-    changeUsername() {
-      if (this.newUsername !== this.confirmNewUsername) {
-        this.usernameMessage = 'New usernames do not match.';
-        return;
-      }
+  
+changeUsername() {
+  if (this.newUsername !== this.confirmNewUsername) {
+    this.usernameMessage = 'New usernames do not match.';
+    return;
+  }
 
-      this.authService.changeUsername(this.enteredCurrentUsername, this.newUsername).subscribe({
-        next: () => {
-          this.usernameMessage = 'Username updated successfully.';
-          this.currentUsername = this.newUsername; // Update displayed username
-          this.clearUsernameFields();
-        },
-        error: (err) => {
-          this.usernameMessage = err.error?.Message || 'Failed to update username.';
-        }
-      });
+  this.authService.changeUsername(this.enteredCurrentUsername, this.newUsername).subscribe({
+    next: () => {
+      this.usernameMessage = 'Username updated successfully.';
+      this.currentUsername = this.newUsername; 
+      this.clearUsernameFields();
+      
+      // Add notification and toast
+      this.notificationService.createNotification({
+        type: 'UsernameChanged',
+        message: `Your username was changed to ${this.newUsername}.`,
+      }).subscribe();
+      this.toastService.show(`Username updated successfully!`, 'UsernameChanged');
+    },
+    error: (err) => {
+      this.usernameMessage = err.error?.Message || 'Failed to update username.';
     }
-      toggleTheme(): void {
+  });
+}
+
+changePassword() {
+  if (this.newPassword !== this.confirmNewPassword) {
+    this.passwordMessage = 'New passwords do not match.';
+    return;
+  }
+
+  this.authService.changePassword(this.enteredCurrentPassword, this.newPassword).subscribe({
+    next: () => {
+      this.passwordMessage = 'Password updated successfully.';
+      this.clearPasswordFields();
+      
+      // Add notification and toast
+      this.notificationService.createNotification({
+        type: 'PasswordReset',
+        message: 'Your password was successfully changed.',
+      }).subscribe();
+      this.toastService.show('Password updated successfully!', 'PasswordReset');
+    },
+    error: (err) => {
+      this.passwordMessage = err.error?.Message || 'Failed to update password.';
+    }
+  });
+}
+
+
+  toggleTheme(): void {
     this.themeService.toggleTheme();
   }
 
@@ -51,23 +85,6 @@ export class SettingsComponent {
     return this.themeService.isDarkMode();
   }
 
-  // Change Password
-  changePassword() {
-    if (this.newPassword !== this.confirmNewPassword) {
-      this.passwordMessage = 'New passwords do not match.';
-      return;
-    }
-
-    this.authService.changePassword(this.enteredCurrentPassword, this.newPassword).subscribe({
-      next: () => {
-        this.passwordMessage = 'Password updated successfully.';
-        this.clearPasswordFields();
-      },
-      error: (err) => {
-        this.passwordMessage = err.error?.Message || 'Failed to update password.';
-      }
-    });
-  }
 
   // Clear Username Fields
   clearUsernameFields() {
@@ -81,5 +98,20 @@ export class SettingsComponent {
     this.enteredCurrentPassword = '';
     this.newPassword = '';
     this.confirmNewPassword = '';
+  }
+
+    deleteAccount() {
+    if (confirm('Are you sure you want to delete your account? This action cannot be undone.')) {
+      this.authService.deleteOwnAccount().subscribe({
+        next: () => {
+          // Optionally clear local storage and redirect to login
+          localStorage.clear();
+          window.location.href = '/login';
+        },
+        error: (err) => {
+          alert(err.error?.Message || 'Failed to delete account.');
+        }
+      });
+    }
   }
 }

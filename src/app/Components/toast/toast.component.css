@@ -1,0 +1,111 @@
+.toast {
+  position: fixed;
+  top: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  min-width: 300px;
+  max-width: 450px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: var(--primary-color);
+  color: #fff;
+  padding: 18px 32px;
+  border-radius: 12px;
+  font-size: 1.08rem;
+  font-weight: 500;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.18);
+  z-index: 3000;
+  opacity: 0.97;
+  transition: background 0.2s;
+  will-change: transform, opacity;
+  margin: 0; /* Prevent margin from causing jittery animation */
+}
+
+.toast-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 36px;
+  min-height: 36px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.13);
+  font-size: 1.8rem;
+}
+
+/* Create/upload notifications - Blue */
+.toast.success, 
+.toast.TaskCreated, 
+.toast.FileUploaded,
+.toast.SubTaskCreated {
+  background: #1976d2;
+  color: #fff;
+}
+
+/* Delete notifications - Red */
+.toast.error, 
+.toast.TaskDeleted, 
+.toast.FileDeleted, 
+.toast.SubTaskDeleted {
+  background: #e53935;
+  color: #fff;
+}
+
+/* Update/Change notifications - Orange */
+.toast.info, 
+.toast.TaskUpdated, 
+.toast.SubTaskUpdated,
+.toast.SubTaskStatusChanged {
+  background: #ffa726;
+  color: #fff;
+}
+
+/* Warning/Settings notifications - Yellow */
+.toast.warning, 
+.toast.PasswordReset,
+.toast.UsernameChanged {
+  background: #ffc107;
+  color: #333;
+}
+
+/* Dark mode adjustments */
+html.dark-mode .toast {
+  box-shadow: 0 4px 18px rgba(0,0,0,0.3);
+}
+
+/* Color overrides for dark mode */
+html.dark-mode .toast.success, 
+html.dark-mode .toast.TaskCreated, 
+html.dark-mode .toast.FileUploaded,
+html.dark-mode .toast.SubTaskCreated {
+  background: #1565c0;
+}
+
+html.dark-mode .toast.error, 
+html.dark-mode .toast.TaskDeleted, 
+html.dark-mode .toast.FileDeleted, 
+html.dark-mode .toast.SubTaskDeleted {
+  background: #c62828;
+}
+
+html.dark-mode .toast.info, 
+html.dark-mode .toast.TaskUpdated, 
+html.dark-mode .toast.SubTaskUpdated,
+html.dark-mode .toast.SubTaskStatusChanged {
+  background: #ef6c00;
+}
+
+html.dark-mode .toast.warning, 
+html.dark-mode .toast.PasswordReset,
+html.dark-mode .toast.UsernameChanged {
+  background: #f9a825;
+  color: #333;
+}
+
+.toast-message {
+  flex: 1;
+  font-size: 1.08rem;
+  font-weight: 500;
+  word-break: break-word;
+  line-height: 1.3;
+}

@@ -1,0 +1,49 @@
+<div class="notifications-container">
+  <h2>Notifications</h2>
+  <div *ngIf="notifications.length === 0" class="empty-state">
+    No notifications.
+  </div>
+  <ul>
+    <li *ngFor="let n of notifications" [ngClass]="getNotificationClass(n.type)">
+      <div class="notification-content">
+        <span class="notification-icon">
+          <ng-container [ngSwitch]="n.type">
+            <!-- Task notifications -->
+            <span *ngSwitchCase="'TaskCreated'" class="material-icons">add_circle</span>
+            <span *ngSwitchCase="'TaskDeleted'" class="material-icons">delete</span>
+            <span *ngSwitchCase="'TaskUpdated'" class="material-icons">edit</span>
+            
+            <!-- Subtask notifications -->
+            <span *ngSwitchCase="'SubTaskCreated'" class="material-icons">playlist_add</span>
+            <span *ngSwitchCase="'SubTaskDeleted'" class="material-icons">remove_circle</span>
+            <span *ngSwitchCase="'SubTaskUpdated'" class="material-icons">edit_note</span>
+            <span *ngSwitchCase="'SubTaskStatusChanged'" class="material-icons">sync_alt</span>
+            
+            <!-- File notifications -->
+            <span *ngSwitchCase="'FileUploaded'" class="material-icons">cloud_upload</span>
+            <span *ngSwitchCase="'FileDeleted'" class="material-icons">delete_forever</span>
+            
+            <!-- Account notifications -->
+            <span *ngSwitchCase="'PasswordReset'" class="material-icons">lock_reset</span>
+            <span *ngSwitchCase="'UsernameChanged'" class="material-icons">person</span>
+            
+            <!-- Default icon -->
+            <span *ngSwitchDefault class="material-icons">notifications</span>
+          </ng-container>
+        </span>
+        <div class="notification-text">
+          <div class="notification-title">{{ getNotificationTitle(n.type) }}</div>
+          <div class="notification-message">{{ n.message }}</div>
+        </div>
+        <span class="notification-date">{{ n.createdAt | date:'short' }}</span>
+        <button class="delete-button" (click)="deleteNotification(n)">
+            <span class="material-icons">close</span>
+          </button>
+      </div>
+    </li>
+  </ul>
+    <!-- Clear all notifications button -->
+  <div class="notification-clear-all" *ngIf="notifications.length > 0">
+    <button (click)="clearAllNotifications()">Clear All Notifications</button>
+  </div>
+</div>

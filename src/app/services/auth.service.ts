@@ -76,5 +76,10 @@ export class AuthService {
     return localStorage.getItem('userRole');
   }
 
+  deleteOwnAccount(): Observable<any> {
+  return this.http.delete(`${this.apiUrl}/users/me`, {
+    headers: { 'Authorization': `Bearer ${this.getToken()}` }
+  });
+}
 
 }

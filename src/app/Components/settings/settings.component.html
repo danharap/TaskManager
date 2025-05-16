@@ -59,4 +59,10 @@
       <p *ngIf="passwordMessage" class="message">{{ passwordMessage }}</p>
     </form>
   </section>
+
+  <section class="change-section danger-section">
+    <h3>Danger Zone</h3>
+    <button class="delete-account-btn" (click)="deleteAccount()">Delete My Account</button>
+    <p class="danger-text">Warning: This action is irreversible and will delete all your data.</p>
+  </section>
 </main>

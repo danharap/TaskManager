@@ -32,6 +32,9 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { FabCreateTaskComponent } from './Components/fab-create-task/fab-create-task.component';
+import { LoadingSpinnerComponent } from './Components/loading-spinner/loading-spinner.component';
+import { NotificationsComponent } from './Components/notifications/notifications.component';
+import { ToastComponent } from './Components/toast/toast.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -58,6 +61,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     SubtaskBoardComponent,
     AnimationsComponent,
     FabCreateTaskComponent,
+    LoadingSpinnerComponent,
+    NotificationsComponent,
+    ToastComponent,
   ],
   imports: [
     BrowserModule,

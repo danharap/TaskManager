@@ -1,7 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { TaskService } from './services/task.service';
+import { Router, NavigationStart, NavigationEnd, NavigationCancel, NavigationError } from '@angular/router';
+import { NotificationService } from './services/notification.service';
+import { ToastService } from './services/toast.service';
 import { TaskModel } from './models/task.model';
-import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { CreateTaskComponent } from './Components/create-task/create-task.component';
+
 
 @Component({
   selector: 'app-root',
@@ -12,11 +17,54 @@ export class AppComponent implements OnInit {
   title = 'FullstackApp';
   tasks: TaskModel[] = [];
   selectedTask: TaskModel | null = null;
-
-  constructor(private taskService: TaskService, private router: Router) {}
+  isLoading = false;
+  constructor(private taskService: TaskService,
+    private notificationService: NotificationService,
+    private toastService: ToastService,
+    private dialog: MatDialog,
+    private router: Router) {
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationStart) {
+        this.isLoading = true;
+      } else if (
+        event instanceof NavigationEnd ||
+        event instanceof NavigationCancel ||
+        event instanceof NavigationError
+      ) {
+        this.isLoading = false;
+      }
+    });
+  }
 
   ngOnInit() {
     this.getTasks();
+  }
+
+  openCreateTaskDialog() {
+    const dialogRef = this.dialog.open(CreateTaskComponent, {
+      width: '400px'
+    });
+
+    dialogRef.afterClosed().subscribe((result: TaskModel) => {
+      if (result) {
+        this.taskService.addTask(result).subscribe({
+          next: (createdTask) => {
+            this.toastService.show(`Task "${createdTask.title}" created!`, 'TaskCreated');
+            this.notificationService.createNotification({
+              type: 'TaskCreated',
+              message: `Task "${createdTask.title}" was created.`,
+            }).subscribe();
+            // Optionally refresh tasks if you're on the dashboard
+            if (this.router.url === '/dashboard') {
+              this.getTasks?.();
+            }
+          },
+          error: () => {
+            this.toastService.show('Failed to create task.', 'error');
+          }
+        });
+      }
+    });
   }
 
   isAuthPage(): boolean {

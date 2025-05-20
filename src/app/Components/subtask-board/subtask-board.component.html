@@ -48,20 +48,34 @@
     <button (click)="addSubTask()" [disabled]="!newSubTaskTitle.trim()">Add</button>
   </div>
   <!-- Subtask View/Edit Dialog -->
-  <div *ngIf="viewingSubtask" class="subtask-view-dialog">
-    <div class="subtask-view-content">
-      <h3>Edit Subtask</h3>
-      <input [(ngModel)]="viewingSubtask.title" placeholder="Title" />
-      <textarea [(ngModel)]="viewingSubtask.description" placeholder="Description"></textarea>
+<div *ngIf="viewingSubtask" class="subtask-view-dialog">
+  <div class="subtask-view-content">
+    <h2>Edit Subtask</h2>
+    <form class="form-container">
       <label>
-        <input type="checkbox" [(ngModel)]="viewingSubtask.isCompleted" />
-        Completed
+        Title:
+        <input [(ngModel)]="viewingSubtask.title" name="title" required />
       </label>
-      <div class="edit-actions">
-        <button (click)="saveViewingSubtask()">Save</button>
-        <button (click)="closeViewSubtask()">Cancel</button>
-        <button class="delete-btn" (click)="deleteSubTask(viewingSubtask)">Delete</button>
+      <label>
+        Description:
+        <textarea [(ngModel)]="viewingSubtask.description" name="description" placeholder="Add a description..."></textarea>
+      </label>
+      <label class="checkbox-label">
+        <span>Status:</span>
+        <select [(ngModel)]="viewingSubtask.status" name="status">
+          <option *ngFor="let status of statuses" [value]="status">{{ status }}</option>
+        </select>
+      </label>
+      <label class="checkbox-label">
+        <span>Is Completed:</span>
+        <input type="checkbox" [(ngModel)]="viewingSubtask.isCompleted" name="isCompleted" />
+      </label>
+      <div class="dialog-actions">
+        <button type="button" (click)="saveViewingSubtask()">Save</button>
+        <button type="button" class="cancel-btn" (click)="closeViewSubtask()">Cancel</button>
+        <button type="button" class="delete-btn" (click)="deleteSubTask(viewingSubtask)">Delete</button>
       </div>
-    </div>
+    </form>
   </div>
+</div>
 </div>

@@ -1,0 +1,233 @@
+<div class="docs-container">
+  <h2>Developer Documentation</h2>
+
+  <div class="docs-card">
+    <div class="docs-icon">🏛️</div>
+    <div class="docs-content">
+      <h3>System Architecture</h3>
+      <p>FullstackApp is built with Angular 18 frontend and ASP.NET Core backend with SQL Server for data storage.</p>
+      <p><strong>Frontend:</strong> Angular with components for tasks, subtasks, calendar, notifications, and user management.</p>
+      <p><strong>Backend:</strong> ASP.NET Core Web API with Entity Framework Core for database access.</p>
+      <p><strong>Database:</strong> Microsoft SQL Server (LocalDB) with tables for Users, Tasks, SubTasks, and Notifications.</p>
+      <p><strong>Authentication:</strong> JWT-based authentication with token signing and validation.</p>
+    </div>
+  </div>
+
+  <div class="docs-card">
+    <div class="docs-icon">🧱</div>
+    <div class="docs-content">
+      <h3>Backend Data Models</h3>
+      <pre><code>// UserModel
+public class UserModel &lbrace;
+    public int id &lbrace; get; set; &rbrace; 
+    public string username &lbrace; get; set; &rbrace; = string.Empty;
+    public string passwordHash &lbrace; get; set; &rbrace; = string.Empty;
+    public string role &lbrace; get; set; &rbrace; = "User";
+&rbrace;
+
+// TaskModel
+public class TaskModel &lbrace;
+    public int id &lbrace; get; set; &rbrace;
+    public string? title &lbrace; get; set; &rbrace;
+    public string? description &lbrace; get; set; &rbrace;
+    public bool isCompleted &lbrace; get; set; &rbrace;
+    public DateTime createdAt &lbrace; get; set; &rbrace;
+    public string? priority &lbrace; get; set; &rbrace;
+    public int userId &lbrace; get; set; &rbrace;
+    public DateTime? plannedCompletionDate &lbrace; get; set; &rbrace;
+    public ICollection&lt;SubTaskModel&gt;? SubTasks &lbrace; get; set; &rbrace;
+&rbrace;
+
+// SubTaskModel
+public class SubTaskModel &lbrace;
+    public int id &lbrace; get; set; &rbrace;
+    public string? title &lbrace; get; set; &rbrace;
+    public string? description &lbrace; get; set; &rbrace;
+    public bool isCompleted &lbrace; get; set; &rbrace;
+    public string status &lbrace; get; set; &rbrace; = "To Do";
+    public int taskId &lbrace; get; set; &rbrace;
+&rbrace;
+
+// NotificationModel
+public class NotificationModel &lbrace;
+    public int id &lbrace; get; set; &rbrace;
+    public int userId &lbrace; get; set; &rbrace;
+    public string type &lbrace; get; set; &rbrace; = string.Empty; 
+    public string message &lbrace; get; set; &rbrace; = string.Empty;
+    public DateTime createdAt &lbrace; get; set; &rbrace;
+    public bool isRead &lbrace; get; set; &rbrace; = false;
+&rbrace;</code></pre>
+    </div>
+  </div>
+
+  <div class="docs-card">
+    <div class="docs-icon">🔐</div>
+    <div class="docs-content">
+      <h3>Authentication Flow</h3>
+      <p><strong>User Registration:</strong> Passwords are hashed using SHA-256 before being stored in the database.</p>
+      <p><strong>Login Process:</strong> When users log in, the server verifies the password hash and, if valid, generates a JWT token containing the user ID, username, and role as claims.</p>
+      <p><strong>JWT Configuration:</strong></p>
+      <pre><code>// JWT Secret configuration
+"JwtSettings": &lbrace;
+  "Secret": "X8f3!kL9&#64;pQ2#zW7$yT6^vR4&nM1*oJ5"
+&rbrace;</code></pre>
+      <p><strong>Token Validation:</strong> The server validates incoming tokens using the JWT secret key.</p>
+      <pre><code>// Token validation parameters
+options.TokenValidationParameters = new TokenValidationParameters
+&lbrace;
+    ValidateIssuerSigningKey = true,
+    IssuerSigningKey = new SymmetricSecurityKey(
+      Encoding.ASCII.GetBytes(jwtSecret)),
+    ValidateIssuer = false,
+    ValidateAudience = false
+&rbrace;;</code></pre>
+    </div>
+  </div>
+
+  <div class="docs-card">
+    <div class="docs-icon">🗄️</div>
+    <div class="docs-content">
+      <h3>Database Configuration</h3>
+      <p>The application uses Entity Framework Core with SQL Server via a DbContext:</p>
+      <pre><code>// AppDbContext setup
+public class AppDbContext : DbContext
+&lbrace;
+    public AppDbContext(DbContextOptions&lt;AppDbContext&gt; options) 
+      : base(options) &lbrace; &rbrace;
+
+    public DbSet&lt;UserModel&gt; Users &lbrace; get; set; &rbrace; 
+    public DbSet&lt;TaskModel&gt; Tasks &lbrace; get; set; &rbrace; 
+    public DbSet&lt;SubTaskModel&gt; SubTasks &lbrace; get; set; &rbrace; 
+    public DbSet&lt;NotificationModel&gt; Notifications &lbrace; get; set; &rbrace;
+&rbrace;</code></pre>
+      <p>Database connection is configured in appsettings.json:</p>
+      <pre><code class="connection-string">"ConnectionStrings": &lbrace;
+  "DefaultConnection": "Server=(localdb)\\MSSQLLocalDB;Database=BackendW2ProjDb;Trusted_Connection=True;MultipleActiveResultSets=true"
+&rbrace;</code></pre>
+    </div>
+  </div>
+
+  <div class="docs-card">
+    <div class="docs-icon">🌐</div>
+    <div class="docs-content">
+      <h3>API Endpoints</h3>
+      <p><strong>Authentication Endpoints:</strong></p>
+      <ul>
+        <li><code>POST /api/auth/register</code> - Register a new user</li>
+        <li><code>POST /api/auth/login</code> - Login and receive JWT token</li>
+        <li><code>PUT /api/auth/username</code> - Update username</li>
+        <li><code>PUT /api/auth/password</code> - Update password</li>
+      </ul>
+      <p><strong>Task Endpoints:</strong></p>
+      <ul>
+        <li><code>GET /api/tasks</code> - Get current user's tasks</li>
+        <li><code>GET /api/tasks/&lbrace;id&rbrace;</code> - Get specific task</li>
+        <li><code>POST /api/tasks</code> - Create new task</li>
+        <li><code>PUT /api/tasks/&lbrace;id&rbrace;</code> - Update task</li>
+        <li><code>DELETE /api/tasks/&lbrace;id&rbrace;</code> - Delete task</li>
+      </ul>
+      <p><strong>Subtask Endpoints:</strong></p>
+      <ul>
+        <li><code>GET /api/tasks/&lbrace;taskId&rbrace;/subtasks</code> - Get subtasks for a task</li>
+        <li><code>POST /api/tasks/&lbrace;taskId&rbrace;/subtasks</code> - Add subtask</li>
+        <li><code>PUT /api/subtasks/&lbrace;id&rbrace;</code> - Update subtask</li>
+        <li><code>DELETE /api/subtasks/&lbrace;id&rbrace;</code> - Delete subtask</li>
+      </ul>
+      <p><strong>Notification Endpoints:</strong></p>
+      <ul>
+        <li><code>GET /api/notifications</code> - Get current user's notifications</li>
+        <li><code>POST /api/notifications</code> - Create notification</li>
+        <li><code>PUT /api/notifications/&lbrace;id&rbrace;/read</code> - Mark notification as read</li>
+        <li><code>DELETE /api/notifications/&lbrace;id&rbrace;</code> - Delete notification</li>
+        <li><code>DELETE /api/notifications/clear-all</code> - Clear all notifications</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="docs-card">
+    <div class="docs-icon">🔄</div>
+    <div class="docs-content">
+      <h3>Frontend-Backend Communication</h3>
+      <p><strong>HTTP Interceptor:</strong> The Angular app uses an HTTP interceptor to automatically attach the JWT token to every API request:</p>
+      <pre><code>// AuthInterceptor
+intercept(req: HttpRequest&lt;any&gt;, next: HttpHandler): Observable&lt;HttpEvent&lt;any&gt;&gt; &lbrace;
+  const token = localStorage.getItem('jwtToken');
+  if (token) &lbrace;
+    const cloned = req.clone(&lbrace;
+      headers: req.headers.set('Authorization', `Bearer $&lbrace;token&rbrace;`)
+    &rbrace;);
+    return next.handle(cloned);
+  &rbrace;
+  return next.handle(req);
+&rbrace;</code></pre>
+      <p><strong>Angular Services:</strong> Services handle API communication and provide data to components:</p>
+<pre><code>// TaskService example
+getTasks(): Observable&lt;TaskModel[]&gt; &lbrace;
+  return this.http.get&lt;TaskModel[]&gt;(`$&lbrace;this.apiUrl&rbrace;`);
+&rbrace;
+
+addTask(task: TaskModel): Observable&lt;TaskModel&gt; &lbrace;
+  return this.http.post&lt;TaskModel&gt;(`$&lbrace;this.apiUrl&rbrace;`), task);
+&rbrace;</code></pre>
+    </div>
+  </div>
+
+  <div class="docs-card">
+    <div class="docs-icon">🔔</div>
+    <div class="docs-content">
+      <h3>Notification System</h3>
+      <p>The application implements two types of notifications:</p>
+      <ol>
+        <li><strong>Toast notifications:</strong> Temporary pop-up messages for immediate feedback</li>
+        <li><strong>Persistent notifications:</strong> Stored in the database and displayed in the Notifications tab</li>
+      </ol>
+      <p><strong>Toast Service:</strong> Provides temporary on-screen notifications</p>
+      <pre><code>// ToastService
+show(message: string, type: string = 'success') &lbrace;
+  this.toastSubject.next(&lbrace; message, type &rbrace;);
+&rbrace;</code></pre>
+      <p><strong>Notification Service:</strong> Manages persistent notifications</p>
+<pre><code>// NotificationService
+createNotification(notification: Partial&lt;NotificationModel&gt;): Observable&lt;NotificationModel&gt; &lbrace;
+  return this.http.post&lt;NotificationModel&gt;(`$&lbrace;this.apiUrl&rbrace;`), notification);
+&rbrace;</code></pre>
+    </div>
+  </div>
+
+  <div class="docs-card">
+    <div class="docs-icon">🎨</div>
+    <div class="docs-content">
+      <h3>Theming System</h3>
+      <p>The application supports light and dark themes using CSS variables:</p>
+      <pre><code>// CSS Variables for Theming
+:root &lbrace;
+  --primary-color: #1976d2;
+  --hover-color: #1565c0;
+  --background-color: #f5f5f5;
+  --secondary-color: #ffffff;
+  --text-color: #333333;
+  --border-color: #e0e0e0;
+  --sidebar-color: #ffffff;
+  --sidebar-text-color: #333333;
+&rbrace;
+
+html.dark-mode &lbrace;
+  --primary-color: #90caf9;
+  --hover-color: #42a5f5;
+  --background-color: #121212;
+  --secondary-color: #1e1e1e;
+  --text-color: #ffffff;
+  --border-color: #333333;
+  --sidebar-color: #1e1e1e;
+  --sidebar-text-color: #ffffff;
+&rbrace;</code></pre>
+      <p>The ThemeService manages theme switching:</p>
+      <pre><code>// ThemeService
+toggleDarkMode(): void &lbrace;
+  const isDarkMode = localStorage.getItem('darkMode') === 'true';
+  localStorage.setItem('darkMode', (!isDarkMode).toString());
+  this.updateTheme(!isDarkMode);
+&rbrace;</code></pre>
+    </div>
+  </div>
+</div>

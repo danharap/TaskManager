@@ -152,10 +152,14 @@ html.dark-mode .status-select {
   -webkit-font-smoothing: antialiased;
 }
 
+/* Subtask View Dialog - Updated to match task dialogs */
 .subtask-view-dialog {
   position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0,0,0,0.4);
+  top: 0; 
+  left: 0; 
+  right: 0; 
+  bottom: 0;
+  background: rgba(0,0,0,0.5);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -163,49 +167,139 @@ html.dark-mode .status-select {
 }
 
 .subtask-view-content {
-  background: var(--secondary-color);
-  color: var(--text-color);
-  padding: 32px 24px;
-  border-radius: 10px;
-  min-width: 300px;
-  max-width: 90vw;
-  box-shadow: 0 6px 24px rgba(0,0,0,0.25);
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+  background-color: var(--secondary-color);
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+  width: 90%;
+  max-width: 600px;
+  min-width: 400px;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 30px;
+  position: relative;
+  animation: dialogFadeIn 0.3s ease;
+}
+
+@keyframes dialogFadeIn {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 html.dark-mode .subtask-view-content {
-  background: var(--background-color);
-  color: var(--sidebar-text-color);
+  background-color: var(--background-color);
+  color: var(--text-color);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+}
+
+.subtask-view-content h2 {
+  text-align: center;
+  color: var(--text-color);
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+}
+
+.subtask-view-content .form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.subtask-view-content label {
+  display: flex;
+  flex-direction: column;
+  font-size: 1rem;
+  color: var(--text-color);
+  margin-bottom: 5px;
+}
+
+.subtask-view-content .checkbox-label {
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+
+.subtask-view-content .checkbox-label input[type="checkbox"] {
+  width: auto;
+  margin-left: 10px;
 }
 
 .subtask-view-content input,
-.subtask-view-content textarea {
-  width: 100%;
-  padding: 7px;
-  border-radius: 4px;
+.subtask-view-content textarea,
+.subtask-view-content select {
+  padding: 12px;
+  font-size: 1rem;
   border: 1px solid var(--border-color);
-  background: var(--background-color);
+  border-radius: 8px;
+  outline: none;
+  background-color: var(--background-color);
   color: var(--text-color);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  width: 100%;
 }
 
 html.dark-mode .subtask-view-content input,
-html.dark-mode .subtask-view-content textarea {
-  background: var(--secondary-color);
-  color: var(--sidebar-text-color);
+html.dark-mode .subtask-view-content textarea,
+html.dark-mode .subtask-view-content select {
+  background-color: var(--secondary-color);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
 }
 
-.edit-actions {
+.subtask-view-content input:focus,
+.subtask-view-content textarea:focus,
+.subtask-view-content select:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 5px var(--primary-color);
+}
+
+.subtask-view-content textarea {
+  resize: none;
+  height: 120px;
+}
+
+.subtask-view-content .dialog-actions {
   display: flex;
-  gap: 8px;
-  margin-top: 4px;
+  justify-content: space-between;
+  gap: 15px;
+  margin-top: 20px;
 }
 
-.edit-actions .delete-btn {
+.subtask-view-content .dialog-actions button {
+  flex: 1;
+  padding: 12px 20px;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.subtask-view-content .dialog-actions button:hover {
+  background-color: var(--hover-color);
+  transform: translateY(-2px);
+}
+
+.subtask-view-content .dialog-actions button:active {
+  transform: translateY(0);
+}
+
+.subtask-view-content .dialog-actions .cancel-btn {
+  background-color: #6c757d;
+}
+
+.subtask-view-content .dialog-actions .cancel-btn:hover {
+  background-color: #5a6268;
+}
+
+.subtask-view-content .dialog-actions .delete-btn {
+  background-color: #dc3545;
   position: static;
-  color: #dc3545;
+}
+
+.subtask-view-content .dialog-actions .delete-btn:hover {
+  background-color: #c82333;
 }
 
 .add-subtask-form {
@@ -263,6 +357,18 @@ html.dark-mode .add-subtask-form input {
   }
   .kanban-task {
     min-width: unset;
+  }
+  .subtask-view-content {
+    width: 95%;
+    min-width: unset;
+    padding: 20px;
+  }
+  .subtask-view-content h2 {
+    font-size: 1.5rem;
+  }
+  .subtask-view-content .dialog-actions button {
+    font-size: 0.9rem;
+    padding: 10px;
   }
 }
 

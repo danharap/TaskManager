@@ -35,6 +35,8 @@ import { FabCreateTaskComponent } from './Components/fab-create-task/fab-create-
 import { LoadingSpinnerComponent } from './Components/loading-spinner/loading-spinner.component';
 import { NotificationsComponent } from './Components/notifications/notifications.component';
 import { ToastComponent } from './Components/toast/toast.component';
+import { HelpComponent } from './Components/help/help.component';
+import { DeveloperDocsComponent } from './Components/developer-docs/developer-docs.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -64,6 +66,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     LoadingSpinnerComponent,
     NotificationsComponent,
     ToastComponent,
+    HelpComponent,
+    DeveloperDocsComponent,
   ],
   imports: [
     BrowserModule,

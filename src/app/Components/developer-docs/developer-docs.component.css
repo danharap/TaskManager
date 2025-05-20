@@ -1,0 +1,140 @@
+.docs-container {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 30px;
+  background: var(--secondary-color);
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+}
+
+html.dark-mode .docs-container {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+}
+
+h2 {
+  text-align: center;
+  color: var(--primary-color);
+  margin-bottom: 30px;
+  font-size: 2rem;
+}
+pre {
+  background-color: var(--secondary-color);
+  padding: 15px;
+  border-radius: 8px;
+  overflow-x: auto; /* This is the key property for handling long lines */
+  margin: 15px 0;
+  border: 1px solid var(--border-color);
+  max-width: 100%; /* Ensure it doesn't exceed parent width */
+  white-space: pre-wrap; /* Allow long words to break */
+  word-wrap: break-word; /* Allow long words to break */
+}
+
+code {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 0.9rem;
+  overflow-wrap: break-word; /* Allow long words to break */
+}
+
+/* For the connection string specifically */
+.connection-string {
+  word-break: break-all; /* Force breaks within words */
+}
+
+.docs-card {
+  display: flex;
+  margin-bottom: 30px;
+  padding: 25px;
+  background: var(--background-color);
+  border-radius: 10px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+html.dark-mode .docs-card {
+  background-color: var(--secondary-color);
+}
+
+.docs-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+}
+
+.docs-icon {
+  font-size: 2.5rem;
+  margin-right: 20px;
+  min-width: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.docs-content {
+  flex: 1;
+}
+
+.docs-content h3 {
+  color: var(--primary-color);
+  margin-top: 0;
+  margin-bottom: 15px;
+  font-size: 1.5rem;
+}
+
+.docs-content p {
+  margin: 10px 0;
+  line-height: 1.5;
+  color: var(--text-color);
+}
+
+.docs-content ul {
+  margin: 10px 0;
+  padding-left: 20px;
+}
+
+.docs-content li {
+  margin-bottom: 8px;
+  line-height: 1.5;
+}
+
+pre {
+  background-color: var(--secondary-color);
+  padding: 15px;
+  border-radius: 8px;
+  overflow-x: auto;
+  margin: 15px 0;
+  border: 1px solid var(--border-color);
+}
+
+html.dark-mode pre {
+  background-color: #2d2d2d;
+  border-color: #444;
+}
+
+code {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 0.9rem;
+}
+
+@media (max-width: 768px) {
+  .docs-container {
+    padding: 20px;
+    margin: 20px auto;
+  }
+  
+  .docs-card {
+    flex-direction: column;
+  }
+  
+  .docs-icon {
+    margin-bottom: 15px;
+    margin-right: 0;
+  }
+  
+  pre {
+    max-width: 100%;
+  }
+  
+  .docs-content h3 {
+    font-size: 1.3rem;
+  }
+}

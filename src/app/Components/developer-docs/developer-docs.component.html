@@ -14,6 +14,187 @@
   </div>
 
   <div class="docs-card">
+    <div class="docs-icon">🔑</div>
+    <div class="docs-content">
+      <h3>Authentication Implementation</h3>
+      <p><strong>Password Hashing:</strong> User passwords are securely hashed using SHA-256 before storage:</p>
+      <pre><code>// Password hashing function
+private string HashPassword(string password)
+&lbrace;
+    using var sha256 = SHA256.Create();
+    var bytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
+    return Convert.ToBase64String(bytes);
+&rbrace;
+
+// Password verification function
+private bool VerifyPassword(string password, string storedHash)
+&lbrace;
+    return HashPassword(password) == storedHash;
+&rbrace;</code></pre>
+      <p><strong>JWT Authentication Flow:</strong></p>
+    <ul>
+      <li><strong>Token Generation:</strong> After successful login, the server creates a JWT token containing the user's ID and role as claims.</li>
+      <li><strong>Security Features:</strong> Tokens are signed using HMAC-SHA256 with a secure secret key and expire after 7 days.</li>
+      <li><strong>Token Storage:</strong> The JWT is stored in the client's localStorage for subsequent API requests.</li>
+      <li><strong>Request Authorization:</strong> An HTTP interceptor automatically attaches the token to all outgoing API requests in the Authorization header.</li>
+    </ul>
+      <pre><code>// Token generation function
+private string GenerateJwtToken(int userId)
+&lbrace;
+    var user = _context.Users.FirstOrDefault(u => u.id == userId);
+    if (user == null) throw new InvalidOperationException("User not found.");
+
+    var tokenHandler = new JwtSecurityTokenHandler();
+    var key = Encoding.ASCII.GetBytes(_jwtSecret);
+    var tokenDescriptor = new SecurityTokenDescriptor
+    &lbrace;
+        Subject = new System.Security.Claims.ClaimsIdentity(new[]
+        &lbrace;
+            new System.Security.Claims.Claim("id", userId.ToString()),
+            new System.Security.Claims.Claim("role", user.role) // Include role claim
+        &rbrace;),
+        Expires = DateTime.UtcNow.AddDays(7), // Token expires in 7 days
+        SigningCredentials = new SigningCredentials(
+            new SymmetricSecurityKey(key), 
+            SecurityAlgorithms.HmacSha256Signature)
+    &rbrace;;
+    var token = tokenHandler.CreateToken(tokenDescriptor);
+    return tokenHandler.WriteToken(token);
+&rbrace;</code></pre>
+      <p>The JWT token contains the user's ID and role, which are used for authorization throughout the application. The token is valid for 7 days and is signed using HMAC-SHA256.</p>
+    </div>
+  </div>
+
+  <div class="docs-card">
+    <div class="docs-icon">🔄</div>
+    <div class="docs-content">
+      <h3>Frontend-Backend Communication</h3>
+      <p><strong>HTTP Interceptor:</strong> The Angular app uses an HTTP interceptor to automatically attach the JWT token to every API request:</p>
+      <pre><code>// AuthInterceptor
+intercept(req: HttpRequest&lt;any&gt;, next: HttpHandler): Observable&lt;HttpEvent&lt;any&gt;&gt; &lbrace;
+  const token = localStorage.getItem('jwtToken');
+  if (token) &lbrace;
+    const cloned = req.clone(&lbrace;
+      headers: req.headers.set('Authorization', `Bearer $&lbrace;token&rbrace;`)
+    &rbrace;);
+    return next.handle(cloned);
+  &rbrace;
+  return next.handle(req);
+&rbrace;</code></pre>
+      <p><strong>Angular Services:</strong> Services handle API communication and provide data to components:</p>
+<pre><code>// TaskService example
+getTasks(): Observable&lt;TaskModel[]&gt; &lbrace;
+  return this.http.get&lt;TaskModel[]&gt;(`$&lbrace;this.apiUrl&rbrace;`);
+&rbrace;
+
+addTask(task: TaskModel): Observable&lt;TaskModel&gt; &lbrace;
+  return this.http.post&lt;TaskModel&gt;(`$&lbrace;this.apiUrl&rbrace;`, task);
+&rbrace;</code></pre>
+    </div>
+  </div>
+
+  <div class="docs-card">
+  <div class="docs-icon">🔒</div>
+  <div class="docs-content">
+    <h3>Authorization Implementation</h3>
+    <p>The application uses ASP.NET Core's built-in authorization system with JWT tokens to secure API endpoints:</p>
+    
+    <p><strong>Authorize Attribute:</strong> Controllers and action methods are decorated with the <code>[Authorize]</code> attribute to restrict access:</p>
+    <pre><code>// Restricting access to authenticated users
+[Authorize]
+[ApiController]
+[Route("api/tasks")]
+public class TasksController : ControllerBase
+&lbrace;
+    // Only authenticated users can access these endpoints
+&rbrace;</code></pre>
+
+    <p><strong>Role-Based Authorization:</strong> The <code>[Authorize]</code> attribute can specify role requirements:</p>
+    <pre><code>// Restricting access to admin users only
+[Authorize(Roles = "Admin")]
+[HttpDelete("users/&lbrace;id&rbrace;")]
+public IActionResult DeleteUser(int id)
+&lbrace;
+    // Only users with Admin role can access this endpoint
+&rbrace;</code></pre>
+
+    <p><strong>JWT Authentication Process:</strong></p>
+    <ol>
+      <li><strong>Request Flow:</strong> When a request comes in, the JWT authentication middleware extracts the token from the Authorization header</li>
+      <li><strong>Token Validation:</strong> The middleware validates the token's signature, expiration, and other claims</li>
+      <li><strong>User Context:</strong> If valid, a ClaimsPrincipal is created and assigned to HttpContext.User</li>
+      <li><strong>Authorization Check:</strong> The [Authorize] attribute checks if the user is authenticated and meets any role requirements</li>
+    </ol>
+
+    <p><strong>User ID Extraction:</strong> Controllers can access the authenticated user's ID from claims:</p>
+    <pre><code>// Getting the current user's ID from JWT claims
+private int GetCurrentUserId()
+&lbrace;
+    var idClaim = User.Claims.FirstOrDefault(c => c.Type == "id");
+    if (idClaim == null) throw new UnauthorizedAccessException();
+    return int.Parse(idClaim.Value);
+&rbrace;</code></pre>
+
+    <p><strong>Security Features:</strong></p>
+    <ul>
+      <li><strong>Automatic Rejection:</strong> Requests without a valid token are automatically rejected with 401 Unauthorized</li>
+      <li><strong>Role Enforcement:</strong> Users without required roles receive 403 Forbidden responses</li>
+      <li><strong>User-Specific Data:</strong> API endpoints filter data based on the authenticated user's ID to ensure data isolation</li>
+      <li><strong>Token Revocation:</strong> Critical operations like password changes invalidate existing tokens</li>
+    </ul>
+  </div>
+</div>
+
+  
+
+<div class="docs-card">
+  <div class="docs-icon">📅</div>
+  <div class="docs-content">
+    <h3>Calendar Implementation</h3>
+    <p>The application's calendar is built using the angular-calendar library integrated with Angular Material:</p>
+    <ul>
+      <li><strong>Technology Stack:</strong> Uses CalendarModule from 'angular-calendar' with date-fns for date operations and Angular Material for dialogs</li>
+      <li><strong>Component Architecture:</strong> Implements a responsive month view with custom cell templates and dynamic sizing via ViewChild</li>
+    </ul>
+    
+    <p><strong>Key Implementation Features:</strong></p>
+    <ul>
+      <li><strong>Task Mapping:</strong> Converts backend task objects to calendar-compatible event objects with appropriate start/end dates</li>
+      <li><strong>Responsive Design:</strong> Dynamically adjusts title length based on available cell width for better mobile display</li>
+      <li><strong>Month Navigation:</strong> Uses date-fns utility functions (subMonths/addMonths) to navigate between months</li>
+      <li><strong>State Management:</strong> Maintains viewDate state and refreshes events when tasks are created or updated</li>
+    </ul>
+    
+    <p>The implementation leverages Angular's dependency injection to access TaskService for data and Material's DialogService for interactions, with RxJS observables handling the asynchronous workflow between the calendar and backend services.</p>
+  </div>
+</div>
+
+  
+
+  <div class="docs-card">
+    <div class="docs-icon">🗄️</div>
+    <div class="docs-content">
+      <h3>Database Configuration</h3>
+      <p>The application uses Entity Framework Core with SQL Server via a DbContext:</p>
+      <pre><code>// AppDbContext setup
+public class AppDbContext : DbContext
+&lbrace;
+    public AppDbContext(DbContextOptions&lt;AppDbContext&gt; options) 
+      : base(options) &lbrace; &rbrace;
+
+    public DbSet&lt;UserModel&gt; Users &lbrace; get; set; &rbrace; 
+    public DbSet&lt;TaskModel&gt; Tasks &lbrace; get; set; &rbrace; 
+    public DbSet&lt;SubTaskModel&gt; SubTasks &lbrace; get; set; &rbrace; 
+    public DbSet&lt;NotificationModel&gt; Notifications &lbrace; get; set; &rbrace;
+&rbrace;</code></pre>
+      <p>Database connection is configured in appsettings.json:</p>
+      <pre><code class="connection-string">"ConnectionStrings": &lbrace;
+  "DefaultConnection": "Server=(localdb)\\MSSQLLocalDB;Database=BackendW2ProjDb;Trusted_Connection=True;MultipleActiveResultSets=true"
+&rbrace;</code></pre>
+    </div>
+  </div>
+
+  <div class="docs-card">
     <div class="docs-icon">🧱</div>
     <div class="docs-content">
       <h3>Backend Data Models</h3>
@@ -61,53 +242,6 @@ public class NotificationModel &lbrace;
   </div>
 
   <div class="docs-card">
-    <div class="docs-icon">🔐</div>
-    <div class="docs-content">
-      <h3>Authentication Flow</h3>
-      <p><strong>User Registration:</strong> Passwords are hashed using SHA-256 before being stored in the database.</p>
-      <p><strong>Login Process:</strong> When users log in, the server verifies the password hash and, if valid, generates a JWT token containing the user ID, username, and role as claims.</p>
-      <p><strong>JWT Configuration:</strong></p>
-      <pre><code>// JWT Secret configuration
-"JwtSettings": &lbrace;
-  "Secret": "X8f3!kL9&#64;pQ2#zW7$yT6^vR4&nM1*oJ5"
-&rbrace;</code></pre>
-      <p><strong>Token Validation:</strong> The server validates incoming tokens using the JWT secret key.</p>
-      <pre><code>// Token validation parameters
-options.TokenValidationParameters = new TokenValidationParameters
-&lbrace;
-    ValidateIssuerSigningKey = true,
-    IssuerSigningKey = new SymmetricSecurityKey(
-      Encoding.ASCII.GetBytes(jwtSecret)),
-    ValidateIssuer = false,
-    ValidateAudience = false
-&rbrace;;</code></pre>
-    </div>
-  </div>
-
-  <div class="docs-card">
-    <div class="docs-icon">🗄️</div>
-    <div class="docs-content">
-      <h3>Database Configuration</h3>
-      <p>The application uses Entity Framework Core with SQL Server via a DbContext:</p>
-      <pre><code>// AppDbContext setup
-public class AppDbContext : DbContext
-&lbrace;
-    public AppDbContext(DbContextOptions&lt;AppDbContext&gt; options) 
-      : base(options) &lbrace; &rbrace;
-
-    public DbSet&lt;UserModel&gt; Users &lbrace; get; set; &rbrace; 
-    public DbSet&lt;TaskModel&gt; Tasks &lbrace; get; set; &rbrace; 
-    public DbSet&lt;SubTaskModel&gt; SubTasks &lbrace; get; set; &rbrace; 
-    public DbSet&lt;NotificationModel&gt; Notifications &lbrace; get; set; &rbrace;
-&rbrace;</code></pre>
-      <p>Database connection is configured in appsettings.json:</p>
-      <pre><code class="connection-string">"ConnectionStrings": &lbrace;
-  "DefaultConnection": "Server=(localdb)\\MSSQLLocalDB;Database=BackendW2ProjDb;Trusted_Connection=True;MultipleActiveResultSets=true"
-&rbrace;</code></pre>
-    </div>
-  </div>
-
-  <div class="docs-card">
     <div class="docs-icon">🌐</div>
     <div class="docs-content">
       <h3>API Endpoints</h3>
@@ -144,33 +278,6 @@ public class AppDbContext : DbContext
     </div>
   </div>
 
-  <div class="docs-card">
-    <div class="docs-icon">🔄</div>
-    <div class="docs-content">
-      <h3>Frontend-Backend Communication</h3>
-      <p><strong>HTTP Interceptor:</strong> The Angular app uses an HTTP interceptor to automatically attach the JWT token to every API request:</p>
-      <pre><code>// AuthInterceptor
-intercept(req: HttpRequest&lt;any&gt;, next: HttpHandler): Observable&lt;HttpEvent&lt;any&gt;&gt; &lbrace;
-  const token = localStorage.getItem('jwtToken');
-  if (token) &lbrace;
-    const cloned = req.clone(&lbrace;
-      headers: req.headers.set('Authorization', `Bearer $&lbrace;token&rbrace;`)
-    &rbrace;);
-    return next.handle(cloned);
-  &rbrace;
-  return next.handle(req);
-&rbrace;</code></pre>
-      <p><strong>Angular Services:</strong> Services handle API communication and provide data to components:</p>
-<pre><code>// TaskService example
-getTasks(): Observable&lt;TaskModel[]&gt; &lbrace;
-  return this.http.get&lt;TaskModel[]&gt;(`$&lbrace;this.apiUrl&rbrace;`);
-&rbrace;
-
-addTask(task: TaskModel): Observable&lt;TaskModel&gt; &lbrace;
-  return this.http.post&lt;TaskModel&gt;(`$&lbrace;this.apiUrl&rbrace;`), task);
-&rbrace;</code></pre>
-    </div>
-  </div>
 
   <div class="docs-card">
     <div class="docs-icon">🔔</div>
@@ -189,7 +296,7 @@ show(message: string, type: string = 'success') &lbrace;
       <p><strong>Notification Service:</strong> Manages persistent notifications</p>
 <pre><code>// NotificationService
 createNotification(notification: Partial&lt;NotificationModel&gt;): Observable&lt;NotificationModel&gt; &lbrace;
-  return this.http.post&lt;NotificationModel&gt;(`$&lbrace;this.apiUrl&rbrace;`), notification);
+  return this.http.post&lt;NotificationModel&gt;(`$&lbrace;this.apiUrl&rbrace;`, notification);
 &rbrace;</code></pre>
     </div>
   </div>

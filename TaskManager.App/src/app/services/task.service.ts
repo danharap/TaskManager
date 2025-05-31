@@ -6,12 +6,13 @@ import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Subject } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TaskService {
-  private apiUrl = 'https://localhost:7119/api/tasks';
+  private apiUrl = `${environment.apiUrl}/tasks`;
 
   constructor(private dataService: DataService, private http: HttpClient) {}
 

@@ -16,15 +16,48 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAllOrigins", policy =>
     {
-        policy.AllowAnyOrigin() // Allow requests from any origin (useful for Swagger and development)
-              .AllowAnyMethod() // Allow all HTTP methods (GET, POST, PUT, DELETE, etc.)
-              .AllowAnyHeader(); // Allow all headers
+        if (builder.Environment.IsDevelopment())
+        {
+            policy.AllowAnyOrigin()
+                  .AllowAnyMethod()
+                  .AllowAnyHeader();
+        }
+        else
+        {
+            // In production, be more specific about allowed origins
+            policy.WithOrigins("https://your-frontend-domain.vercel.app", "https://your-frontend-domain.netlify.app")
+                  .AllowAnyMethod()
+                  .AllowAnyHeader()
+                  .AllowCredentials();
+        }
     });
 });
 
 // Configure database connection
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") 
+    ?? Environment.GetEnvironmentVariable("DATABASE_URL");
+
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+{
+    if (!string.IsNullOrEmpty(connectionString))
+    {
+        // For Railway/Render deployment, DATABASE_URL comes in format:
+        // postgresql://user:password@host:port/database
+        if (connectionString.StartsWith("postgresql://"))
+        {
+            options.UseNpgsql(connectionString);
+        }
+        else
+        {
+            // Local development with PostgreSQL
+            options.UseNpgsql(connectionString);
+        }
+    }
+    else
+    {
+        throw new InvalidOperationException("Database connection string is not configured.");
+    }
+});
 
 // Add JWT Authentication
 var jwtSecret = builder.Configuration["JwtSettings:Secret"];
@@ -46,6 +79,22 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     });
 
 var app = builder.Build();
+
+// Auto-migrate database on startup for deployment
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    try
+    {
+        context.Database.Migrate();
+    }
+    catch (Exception ex)
+    {
+        // Log the error but don't crash the app
+        var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+        logger.LogError(ex, "An error occurred while migrating the database.");
+    }
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

@@ -1,0 +1,17 @@
+$schema: https://railway.app/railway.schema.json
+version: 2
+
+environments:
+  production:
+    services:
+      api:
+        source:
+          dockerfile: Dockerfile
+        variables:
+          ASPNETCORE_ENVIRONMENT: Production
+          ASPNETCORE_URLS: http://+:${{ PORT }}
+          JwtSettings__Secret: X8f3!kL9@pQ2#zW7$yT6^vR4&nM1*oJ5
+        healthcheck:
+          path: /api/health
+          timeout: 30s
+          interval: 30s

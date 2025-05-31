@@ -1,15 +1,14 @@
-# See https://docs.github.com/get-started/getting-started-with-git/ignoring-files for more about ignoring files.
-
+# Angular Frontend (.gitignore)
 # Compiled output
-/dist
-/tmp
-/out-tsc
-/bazel-out
+TaskManager.App/dist
+TaskManager.App/tmp
+TaskManager.App/out-tsc
+TaskManager.App/bazel-out
 
-# Node
-/node_modules
-npm-debug.log
-yarn-error.log
+# Node.js
+TaskManager.App/node_modules
+TaskManager.App/npm-debug.log
+TaskManager.App/yarn-error.log
 
 # IDEs and editors
 .idea/
@@ -28,15 +27,289 @@ yarn-error.log
 !.vscode/extensions.json
 .history/*
 
-# Miscellaneous
-/.angular/cache
-.sass-cache/
-/connect.lock
-/coverage
-/libpeerconnection.log
-testem.log
-/typings
+# Angular specific
+TaskManager.App/.angular/cache
+TaskManager.App/.sass-cache/
+TaskManager.App/connect.lock
+TaskManager.App/coverage
+TaskManager.App/libpeerconnection.log
+TaskManager.App/testem.log
+TaskManager.App/typings
 
 # System files
 .DS_Store
 Thumbs.db
+
+# .NET Backend (.gitignore)
+# Build results
+TaskManager.Api/**/bin/
+TaskManager.Api/**/obj/
+TaskManager.Api/**/out/
+
+# Visual Studio
+TaskManager.Api/.vs/
+TaskManager.Api/**/*.user
+TaskManager.Api/**/*.userosscache
+TaskManager.Api/**/*.sln.docstates
+
+# User-specific files (MonoDevelop/Xamarin Studio)
+TaskManager.Api/**/*.userprefs
+
+# Build Results of an ATL Project
+TaskManager.Api/**/[Dd]ebug/
+TaskManager.Api/**/[Dd]ebugPublic/
+TaskManager.Api/**/[Rr]elease/
+TaskManager.Api/**/[Rr]eleases/
+TaskManager.Api/**/x64/
+TaskManager.Api/**/x86/
+TaskManager.Api/**/[Aa][Rr][Mm]/
+TaskManager.Api/**/[Aa][Rr][Mm]64/
+TaskManager.Api/**/bld/
+TaskManager.Api/**/[Bb]in/
+TaskManager.Api/**/[Oo]bj/
+TaskManager.Api/**/[Ll]og/
+
+# .NET Core
+TaskManager.Api/**/project.lock.json
+TaskManager.Api/**/project.fragment.lock.json
+TaskManager.Api/**/artifacts/
+
+# StyleCop
+TaskManager.Api/**/StyleCopReport.xml
+
+# Files built by Visual Studio
+TaskManager.Api/**/*_i.c
+TaskManager.Api/**/*_p.c
+TaskManager.Api/**/*_h.h
+TaskManager.Api/**/*.ilk
+TaskManager.Api/**/*.meta
+TaskManager.Api/**/*.obj
+TaskManager.Api/**/*.iobj
+TaskManager.Api/**/*.pch
+TaskManager.Api/**/*.pdb
+TaskManager.Api/**/*.ipdb
+TaskManager.Api/**/*.pgc
+TaskManager.Api/**/*.pgd
+TaskManager.Api/**/*.rsp
+TaskManager.Api/**/*.sbr
+TaskManager.Api/**/*.tlb
+TaskManager.Api/**/*.tli
+TaskManager.Api/**/*.tlh
+TaskManager.Api/**/*.tmp
+TaskManager.Api/**/*.tmp_proj
+TaskManager.Api/**/*_wpftmp.csproj
+TaskManager.Api/**/*.log
+TaskManager.Api/**/*.vspscc
+TaskManager.Api/**/*.vssscc
+TaskManager.Api/**/.builds
+TaskManager.Api/**/*.pidb
+TaskManager.Api/**/*.svclog
+TaskManager.Api/**/*.scc
+
+# Chutzpah Test files
+TaskManager.Api/**/_Chutzpah*
+
+# Visual C++ cache files
+TaskManager.Api/**/ipch/
+TaskManager.Api/**/*.aps
+TaskManager.Api/**/*.ncb
+TaskManager.Api/**/*.opendb
+TaskManager.Api/**/*.opensdf
+TaskManager.Api/**/*.sdf
+TaskManager.Api/**/*.cachefile
+TaskManager.Api/**/*.VC.db
+TaskManager.Api/**/*.VC.VC.opendb
+
+# Visual Studio profiler
+TaskManager.Api/**/*.psess
+TaskManager.Api/**/*.vsp
+TaskManager.Api/**/*.vspx
+TaskManager.Api/**/*.sap
+
+# Visual Studio Trace Files
+TaskManager.Api/**/*.e2e
+
+# TFS 2012 Local Workspace
+TaskManager.Api/**/$tf/
+
+# Guidance Automation Toolkit
+TaskManager.Api/**/*.gpState
+
+# ReSharper is a .NET coding add-in
+TaskManager.Api/**/_ReSharper*/
+TaskManager.Api/**/*.[Rr]e[Ss]harper
+TaskManager.Api/**/*.DotSettings.user
+
+# JustCode is a .NET coding add-in
+TaskManager.Api/**/.JustCode
+
+# TeamCity is a build add-in
+TaskManager.Api/**/_TeamCity*
+
+# DotCover is a Code Coverage Tool
+TaskManager.Api/**/*.dotCover
+
+# AxoCover is a Code Coverage Tool
+TaskManager.Api/**/.axoCover/*
+TaskManager.Api/**/!.axoCover/settings.json
+
+# Visual Studio code coverage results
+TaskManager.Api/**/*.coverage
+TaskManager.Api/**/*.coveragexml
+
+# NCrunch
+TaskManager.Api/**/_NCrunch_*
+TaskManager.Api/**/*.*crunch*.local.xml
+TaskManager.Api/**/nCrunchTemp_*
+
+# MightyMoose
+TaskManager.Api/**/*.mm.*
+TaskManager.Api/**/AutoTest.Net/
+
+# Web workbench (sass)
+TaskManager.Api/**/.sass-cache/
+
+# Installshield output folder
+TaskManager.Api/**/[Ee]xpress/
+
+# DocProject is a documentation generator add-in
+TaskManager.Api/**/DocProject/buildhelp/
+TaskManager.Api/**/DocProject/Help/*.HxT
+TaskManager.Api/**/DocProject/Help/*.HxC
+TaskManager.Api/**/DocProject/Help/*.hhc
+TaskManager.Api/**/DocProject/Help/*.hhk
+TaskManager.Api/**/DocProject/Help/*.hhp
+TaskManager.Api/**/DocProject/Help/Html2
+TaskManager.Api/**/DocProject/Help/html
+
+# Click-Once directory
+TaskManager.Api/**/publish/
+
+# Publish Web Output
+TaskManager.Api/**/*.[Pp]ublish.xml
+TaskManager.Api/**/*.azurePubxml
+TaskManager.Api/**/*.pubxml
+TaskManager.Api/**/*.publishproj
+
+# Microsoft Azure Web App publish settings. Comment the next line if you want to
+# checkin your Azure Web App publish settings, but sensitive information contained
+# in these scripts will be encrypted
+TaskManager.Api/**/PublishScripts/
+
+# NuGet Packages
+TaskManager.Api/**/*.nupkg
+TaskManager.Api/**/*.snupkg
+TaskManager.Api/**/**/packages/*
+TaskManager.Api/**/!**/packages/build/
+TaskManager.Api/**/!**/packages/repositories.config
+
+# NuGet Symbol Packages
+TaskManager.Api/**/*.snupkg
+
+# The packages folder can be ignored because of Package Restore
+TaskManager.Api/**/**/[Pp]ackages/*
+TaskManager.Api/**/!**/[Pp]ackages/build/
+TaskManager.Api/**/!**/[Pp]ackages/repositories.config
+
+# NuGet v3's project.json files produces more ignorable files
+TaskManager.Api/**/*.nuget.props
+TaskManager.Api/**/*.nuget.targets
+
+# Microsoft Azure Build Output
+TaskManager.Api/**/csx/
+TaskManager.Api/**/*.build.csdef
+
+# Microsoft Azure Emulator
+TaskManager.Api/**/ecf/
+TaskManager.Api/**/rcf/
+
+# Windows Store app package directories and files
+TaskManager.Api/**/AppPackages/
+TaskManager.Api/**/BundleArtifacts/
+TaskManager.Api/**/Package.StoreAssociation.xml
+TaskManager.Api/**/_pkginfo.txt
+TaskManager.Api/**/*.appx
+
+# Visual Studio cache files
+TaskManager.Api/**/*.suo
+TaskManager.Api/**/*.user
+TaskManager.Api/**/*.userosscache
+TaskManager.Api/**/*.sln.docstates
+
+# Visual Studio 6 build log
+TaskManager.Api/**/*.plg
+
+# Visual Studio 6 workspace options file
+TaskManager.Api/**/*.opt
+
+# Visual Studio 6 auto-generated workspace file (contains which files were open etc.)
+TaskManager.Api/**/*.vbw
+
+# Visual Studio LightSwitch build output
+TaskManager.Api/**/**/*.HTMLClient/GeneratedArtifacts
+TaskManager.Api/**/**/*.DesktopClient/GeneratedArtifacts
+TaskManager.Api/**/**/*.DesktopClient/ModelManifest.xml
+TaskManager.Api/**/**/*.Server/GeneratedArtifacts
+TaskManager.Api/**/**/*.Server/ModelManifest.xml
+TaskManager.Api/**/_Pvt_Extensions
+
+# Paket dependency manager
+TaskManager.Api/**/.paket/paket.exe
+TaskManager.Api/**/paket-files/
+
+# FAKE - F# Make
+TaskManager.Api/**/.fake/
+
+# JetBrains Rider
+TaskManager.Api/**/.idea/
+TaskManager.Api/**/*.sln.iml
+
+# CodeRush personal settings
+TaskManager.Api/**/.cr/personal
+
+# Python Tools for Visual Studio (PTVS)
+TaskManager.Api/**/__pycache__/
+TaskManager.Api/**/*.pyc
+
+# Cake - Uncomment if you are using it
+TaskManager.Api/**/tools/**
+TaskManager.Api/**/!tools/packages.config
+
+# Tabs Studio
+TaskManager.Api/**/*.tss
+
+# Telerik's JustMock configuration file
+TaskManager.Api/**/*.jmconfig
+
+# BizTalk build output
+TaskManager.Api/**/*.btp.cs
+TaskManager.Api/**/*.btm.cs
+TaskManager.Api/**/*.odx.cs
+TaskManager.Api/**/*.xsd.cs
+
+# OpenCover UI analysis results
+TaskManager.Api/**/OpenCover/
+
+# Azure Stream Analytics local run output
+TaskManager.Api/**/ASALocalRun/
+
+# MSBuild Binary and Structured Log
+TaskManager.Api/**/*.binlog
+
+# NVidia Nsight GPU debugger configuration file
+TaskManager.Api/**/*.nvuser
+
+# MFractors (Xamarin productivity tool) working folder
+TaskManager.Api/**/.mfractor/
+
+# Local History for Visual Studio
+TaskManager.Api/**/.localhistory/
+
+# BeatPulse healthcheck temp database
+TaskManager.Api/**/healthchecksdb
+
+# Backup folder for Package Reference Convert tool in Visual Studio 2017
+TaskManager.Api/**/MigrationBackup/
+
+# Ionide (cross platform F# VS Code tools) working folder
+TaskManager.Api/**/.ionide/

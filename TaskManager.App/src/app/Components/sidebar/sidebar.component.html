@@ -40,11 +40,6 @@
         <i class="icon">🌐</i> Developer Docs
       </a>
     </li>
-    <li>
-        <a routerLink="/animations" routerLinkActive="active">
-          <i class="icon">✨</i> Animations
-        </a>
-      </li>
       <li *ngIf="userRole === 'Admin'">
         <a routerLink="/admin" [queryParams]="{ view: 'tasks' }" routerLinkActive="active">
           <i class="icon">🛠️</i> Manage Tasks

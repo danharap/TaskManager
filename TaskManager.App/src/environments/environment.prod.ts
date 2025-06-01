@@ -1,4 +1,6 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://your-backend-url.railway.app/api' // This will be updated with your actual Railway URL
+  apiUrl: window.location.origin.includes('localhost') 
+    ? 'http://localhost:5000/api' 
+    : 'https://taskmanager-fullstack-production.up.railway.app/api'
 };

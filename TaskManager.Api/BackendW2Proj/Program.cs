@@ -91,15 +91,39 @@ var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+    
     try
     {
+        logger.LogInformation("Attempting to ensure database is created...");
+        // First ensure the database exists
+        context.Database.EnsureCreated();
+        
+        logger.LogInformation("Attempting to apply migrations...");
+        // Then apply any pending migrations
         context.Database.Migrate();
+        
+        logger.LogInformation("Database migration completed successfully");
     }
     catch (Exception ex)
     {
         // Log the error but don't crash the app
-        var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
         logger.LogError(ex, "An error occurred while migrating the database.");
+        
+        // Try to create the database schema directly if migration fails
+        try
+        {
+            logger.LogInformation("Migration failed. Attempting to create database schema directly...");
+            
+            // This will ensure tables are created based on your model without using migrations
+            context.Database.EnsureCreated();
+            
+            logger.LogInformation("Database schema created successfully");
+        }
+        catch (Exception innerEx)
+        {
+            logger.LogError(innerEx, "Failed to create database schema directly.");
+        }
     }
 }
 

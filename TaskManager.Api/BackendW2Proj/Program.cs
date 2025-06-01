@@ -21,11 +21,10 @@ builder.Services.AddCors(options =>
             policy.AllowAnyOrigin()
                   .AllowAnyMethod()
                   .AllowAnyHeader();
-        }
-        else
+        }        else
         {
             // In production, be more specific about allowed origins
-            policy.WithOrigins("https://your-frontend-domain.vercel.app", "https://your-frontend-domain.netlify.app")
+            policy.WithOrigins("https://task-manager-7a9o6j4w7-daniel-harapiaks-projects.vercel.app")
                   .AllowAnyMethod()
                   .AllowAnyHeader()
                   .AllowCredentials();

@@ -42,6 +42,22 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     {
         // Railway provides DATABASE_URL in this format:
         // postgresql://user:password@host:port/database
+        // We need to convert it to standard Npgsql connection string format
+        if (connectionString.StartsWith("postgresql://"))
+        {
+            // Extract connection parts
+            var uri = new Uri(connectionString);
+            var userInfo = uri.UserInfo.Split(':');
+            var username = userInfo[0];
+            var password = userInfo[1];
+            var host = uri.Host;
+            var port = uri.Port;
+            var database = uri.AbsolutePath.TrimStart('/');
+            
+            // Build Npgsql connection string
+            connectionString = $"Host={host};Port={port};Database={database};Username={username};Password={password};";
+        }
+        
         options.UseNpgsql(connectionString);
     }
     else

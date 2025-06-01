@@ -34,28 +34,20 @@ builder.Services.AddCors(options =>
 });
 
 // Configure database connection
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") 
-    ?? Environment.GetEnvironmentVariable("DATABASE_URL");
+var connectionString = Environment.GetEnvironmentVariable("DATABASE_URL") 
+    ?? builder.Configuration.GetConnectionString("DefaultConnection");
 
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
     if (!string.IsNullOrEmpty(connectionString))
     {
-        // For Railway/Render deployment, DATABASE_URL comes in format:
+        // Railway provides DATABASE_URL in this format:
         // postgresql://user:password@host:port/database
-        if (connectionString.StartsWith("postgresql://"))
-        {
-            options.UseNpgsql(connectionString);
-        }
-        else
-        {
-            // Local development with PostgreSQL
-            options.UseNpgsql(connectionString);
-        }
+        options.UseNpgsql(connectionString);
     }
     else
     {
-        throw new InvalidOperationException("Database connection string is not configured.");
+        throw new InvalidOperationException("Database connection string is not configured. Please set DATABASE_URL environment variable.");
     }
 });
 

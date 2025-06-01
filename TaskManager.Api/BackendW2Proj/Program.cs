@@ -24,7 +24,7 @@ builder.Services.AddCors(options =>
         }        else
         {
             // In production, be more specific about allowed origins
-            policy.WithOrigins("https://task-manager-7a9o6j4w7-daniel-harapiaks-projects.vercel.app")
+            policy.WithOrigins("https://task-manager-daniel-harapiaks-projects.vercel.app")
                   .AllowAnyMethod()
                   .AllowAnyHeader()
                   .AllowCredentials();

@@ -1,6 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-update-role-dialog',
@@ -15,9 +16,8 @@ export class UpdateRoleDialogComponent {
     @Inject(MAT_DIALOG_DATA) public data: { user: any },
     private http: HttpClient
   ) {}
-
   updateRole() {
-  this.http.put(`https://localhost:7119/api/auth/users/${this.data.user.id}/role`, `"${this.newRole}"`, {
+  this.http.put(`${environment.apiUrl}/auth/users/${this.data.user.id}/role`, `"${this.newRole}"`, {
     headers: { 'Content-Type': 'application/json' } // Ensure the Content-Type is set to JSON
   }).subscribe({
     next: () => {
@@ -25,6 +25,7 @@ export class UpdateRoleDialogComponent {
       this.dialogRef.close(true); // Close the dialog and notify success
     },
     error: (err) => {
+      console.error('Failed to update role:', err);
       alert(err.error?.Message || 'Failed to update role');
     }
   });

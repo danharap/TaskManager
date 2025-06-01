@@ -5,6 +5,7 @@ import { TaskModel } from '../../models/task.model';
 import { UpdateUsernameDialogComponent } from '../update-username-dialog/update-username-dialog.component';
 import { UpdateRoleDialogComponent } from '../update-role-dialog/update-role-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { environment } from '../../../environments/environment';
 
 interface User {
   id: number;
@@ -69,23 +70,21 @@ export class AdminComponent implements OnInit {
       }
     });
   }
-
   // Fetch all users
   getAllUsers() {
-    this.http.get<User[]>('https://localhost:7119/api/auth/users').subscribe({
+    this.http.get<User[]>(`${environment.apiUrl}/auth/users`).subscribe({
       next: (users) => (this.users = users),
-      error: (err) => alert('Failed to fetch users')
+      error: (err) => console.error('Failed to fetch users:', err)
     });
   }
 
   // Fetch all tasks
   getAllTasks() {
-    this.http.get<TaskModel[]>('https://localhost:7119/api/tasks/all').subscribe({
+    this.http.get<TaskModel[]>(`${environment.apiUrl}/tasks/all`).subscribe({
       next: (tasks) => (this.tasks = tasks),
       error: (err) => alert('Failed to fetch tasks')
     });
   }
-
   // Update a user's username
   updateUsername(user: User) {
     if (!this.newUsername) {
@@ -93,7 +92,7 @@ export class AdminComponent implements OnInit {
       return;
     }
 
-    this.http.put(`https://localhost:7119/api/auth/users/${user.id}/username`, { newUsername: this.newUsername }).subscribe({
+    this.http.put(`${environment.apiUrl}/auth/admin/users/${user.id}/username`, { newUsername: this.newUsername }).subscribe({
       next: () => {
         user.username = this.newUsername;
         this.newUsername = '';
@@ -102,12 +101,11 @@ export class AdminComponent implements OnInit {
       error: (err) => alert('Failed to update username')
     });
   }
-
   // Update a user's role
   setRole(user: User) {
     if (!this.newRole) return;
 
-    this.http.put(`https://localhost:7119/api/auth/users/${user.id}/role`, { role: this.newRole }).subscribe({
+    this.http.put(`${environment.apiUrl}/auth/users/${user.id}/role`, this.newRole).subscribe({
       next: () => {
         user.role = this.newRole;
         this.newRole = '';
@@ -116,11 +114,10 @@ export class AdminComponent implements OnInit {
       error: (err) => alert('Failed to update role')
     });
   }
-
   // Delete a user
   deleteUser(id: number) {
     if (confirm('Are you sure you want to delete this user and all their tasks?')) {
-      this.http.delete(`https://localhost:7119/api/auth/users/${id}`).subscribe({
+      this.http.delete(`${environment.apiUrl}/auth/users/${id}`).subscribe({
         next: () => {
           this.users = this.users.filter((u) => u.id !== id);
           alert('User deleted');
@@ -129,13 +126,10 @@ export class AdminComponent implements OnInit {
       });
     }
   }
-
   // Delete a task
   deleteTask(id: number) {
   if (confirm('Are you sure you want to delete this task?')) {
-    const headers = { Authorization: `Bearer ${localStorage.getItem('jwtToken')}` };
-
-    this.http.delete(`https://localhost:7119/api/tasks/${id}`, { headers }).subscribe({
+    this.http.delete(`${environment.apiUrl}/tasks/${id}`).subscribe({
       next: () => {
         this.tasks = this.tasks.filter((task) => task.id !== id);
         alert('Task deleted');

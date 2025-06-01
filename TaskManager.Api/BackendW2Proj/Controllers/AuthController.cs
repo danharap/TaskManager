@@ -153,14 +153,16 @@ namespace BackendW2Proj.Controllers
             _context.SaveChanges();
 
             return Ok(new { Message = $"Username for user ID {id} updated successfully." });
-        }
-
-
-
-        [HttpGet("users")]
+        }        [HttpGet("users")]
         [Authorize(Roles = "Admin")] // Only admins can access this endpoint
         public IActionResult GetAllUsers()
         {
+            // Debug logging to understand the current user and claims
+            var userId = User.Claims.FirstOrDefault(c => c.Type == "id")?.Value;
+            var userRole = User.Claims.FirstOrDefault(c => c.Type == System.Security.Claims.ClaimTypes.Role)?.Value;
+            Console.WriteLine($"User ID: {userId}, Role: {userRole}");
+            Console.WriteLine($"Is Admin: {User.IsInRole("Admin")}");
+            
             var users = _context.Users.Select(u => new
             {
                 u.id,
@@ -191,10 +193,7 @@ namespace BackendW2Proj.Controllers
             _context.SaveChanges();
 
             return Ok(new { Message = $"User with ID {id} and their tasks have been deleted." });
-        }
-
-
-        [HttpPut("users/{id}/role")]
+        }        [HttpPut("users/{id}/role")]
         [Authorize(Roles = "Admin")] // Only admins can update roles
         public IActionResult UpdateUserRole(int id, [FromBody] string newRole)
         {
@@ -220,9 +219,7 @@ namespace BackendW2Proj.Controllers
         private bool VerifyPassword(string password, string storedHash)
         {
             return HashPassword(password) == storedHash;
-        }
-
-        private string GenerateJwtToken(int userId)
+        }        private string GenerateJwtToken(int userId)
         {
             var user = _context.Users.FirstOrDefault(u => u.id == userId);
             if (user == null) throw new InvalidOperationException("User not found.");
@@ -234,7 +231,7 @@ namespace BackendW2Proj.Controllers
                 Subject = new System.Security.Claims.ClaimsIdentity(new[]
                 {
                     new System.Security.Claims.Claim("id", userId.ToString()),
-                    new System.Security.Claims.Claim("role", user.role) // Include the role in the token
+                    new System.Security.Claims.Claim(System.Security.Claims.ClaimTypes.Role, user.role) // Use ClaimTypes.Role for proper role-based auth
                 }),
                 Expires = DateTime.UtcNow.AddDays(7), // Token expires in 7 days
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
